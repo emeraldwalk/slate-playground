@@ -8,18 +8,34 @@ const initialValue: Value = Value.fromJS({
       {
         nodes: [
           {
-            object: 'text',
-            text: 'Block A'
+            nodes: [
+              {
+                object: 'text',
+                text: 'Block A1',
+              },
+            ],
+            object: 'block',
+            type: 'paragraph',
           },
+          {
+            nodes: [
+              {
+                object: 'text',
+                text: 'Block A2',
+              },
+            ],
+            object: 'block',
+            type: 'paragraph',
+          }
         ],
         object: 'block',
-        type: 'paragraph',
+        type: 'div',
       },
       {
         nodes: [
           {
             object: 'text',
-            text: 'Block B'
+            text: 'Block B',
           },
         ],
         object: 'block',

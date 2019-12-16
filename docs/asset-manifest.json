@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/slate-playground/static/css/main.17d3f5e0.chunk.css",
+    "main.js": "/slate-playground/static/js/main.85379e0b.chunk.js",
+    "main.js.map": "/slate-playground/static/js/main.85379e0b.chunk.js.map",
+    "runtime-main.js": "/slate-playground/static/js/runtime-main.f7d8e6a8.js",
+    "runtime-main.js.map": "/slate-playground/static/js/runtime-main.f7d8e6a8.js.map",
+    "static/css/2.9a2181d9.chunk.css": "/slate-playground/static/css/2.9a2181d9.chunk.css",
+    "static/js/2.af5b44c0.chunk.js": "/slate-playground/static/js/2.af5b44c0.chunk.js",
+    "static/js/2.af5b44c0.chunk.js.map": "/slate-playground/static/js/2.af5b44c0.chunk.js.map",
+    "index.html": "/slate-playground/index.html",
+    "precache-manifest.81af6c083dc643493bf20a804e807b1d.js": "/slate-playground/precache-manifest.81af6c083dc643493bf20a804e807b1d.js",
+    "service-worker.js": "/slate-playground/service-worker.js",
+    "static/css/2.9a2181d9.chunk.css.map": "/slate-playground/static/css/2.9a2181d9.chunk.css.map",
+    "static/css/main.17d3f5e0.chunk.css.map": "/slate-playground/static/css/main.17d3f5e0.chunk.css.map",
+    "static/js/2.af5b44c0.chunk.js.LICENSE": "/slate-playground/static/js/2.af5b44c0.chunk.js.LICENSE",
+    "static/media/index.css": "/slate-playground/static/media/open-sans-latin-800italic.c62c3eea.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f7d8e6a8.js",
+    "static/css/2.9a2181d9.chunk.css",
+    "static/js/2.af5b44c0.chunk.js",
+    "static/css/main.17d3f5e0.chunk.css",
+    "static/js/main.85379e0b.chunk.js"
+  ]
+}
