@@ -24,6 +24,16 @@ const initialValue: Value = Value.fromJS({
         ],
         object: 'block',
         type: 'paragraph',
+      },
+      {
+        nodes: [
+          {
+            object: 'text',
+            text: 'Block C'
+          },
+        ],
+        object: 'block',
+        type: 'paragraph',
       }
     ]
   }
@@ -36,9 +46,17 @@ type Action = {
 interface State {
   insertText: [string],
   moveAnchorForward: [number],
+  moveAnchorToEndOfDocument: [],
+  moveAnchorToStartOfDocument: [],
   moveEndForward: [number],
+  moveEndToEndOfDocument: [],
+  moveEndToStartOfDocument: [],
   moveFocusForward: [number],
+  moveFocusToEndOfDocument: [],
+  moveFocusToStartOfDocument: [],
   moveStartForward: [number],
+  moveStartToEndOfDocument: [],
+  moveStartToStartOfDocument: [],
   moveToEndOfDocument: [],
   moveToStartOfDocument: [],
   moveToStartOfNextBlock: [],
@@ -53,6 +71,17 @@ const initialState: State = {
   moveFocusForward: [1],
   moveStartForward: [1],
   moveEndForward: [1],
+
+  moveStartToStartOfDocument: [],
+  moveStartToEndOfDocument: [],
+  moveEndToStartOfDocument: [],
+  moveEndToEndOfDocument: [],
+
+  moveAnchorToStartOfDocument: [],
+  moveAnchorToEndOfDocument: [],
+  moveFocusToStartOfDocument: [],
+  moveFocusToEndOfDocument: [],
+
   moveToStartOfNextBlock: [],
   moveToEndOfNextBlock: [],
   splitBlock: [1],
