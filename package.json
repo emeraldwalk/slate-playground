@@ -1,0 +1,14 @@
+{
+  "name": "slate-playground",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Brian Ingles",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "yarn workspace @slate-playground/0.47x start"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
