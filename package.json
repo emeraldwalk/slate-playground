@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "build": "yarn workspace @slate-playground/0.47x build",
+    "deploy": "rm -rf docs && yarn build && mv packages/0.47x/build docs",
     "start": "yarn workspace @slate-playground/0.47x start"
   },
   "workspaces": [
