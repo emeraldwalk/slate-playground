@@ -17,6 +17,7 @@
     "react-scripts": "3.3.0",
     "slate": "0.47.x",
     "slate-react": "0.22.x",
+    "typeface-open-sans": "^0.0.75",
     "typescript": "~3.7.2"
   },
   "scripts": {

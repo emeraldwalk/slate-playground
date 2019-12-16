@@ -34,12 +34,16 @@ type Action = {
 }[keyof State];
 
 interface State {
+  insertText: [string],
   moveAnchorForward: [number],
   moveEndForward: [number],
   moveFocusForward: [number],
   moveStartForward: [number],
   moveToEndOfDocument: [],
   moveToStartOfDocument: [],
+  moveToStartOfNextBlock: [],
+  moveToEndOfNextBlock: [],
+  splitBlock: [number],
 }
 
 const initialState: State = {
@@ -49,6 +53,10 @@ const initialState: State = {
   moveFocusForward: [1],
   moveStartForward: [1],
   moveEndForward: [1],
+  moveToStartOfNextBlock: [],
+  moveToEndOfNextBlock: [],
+  splitBlock: [1],
+  insertText: [''],
 };
 
 function reducer(
@@ -67,9 +75,13 @@ function onClick<M extends keyof State>(
   ...args: State[M]
 ) {
   return function doOnClick() {
-    editor?.[method](...args);
+    (editor?.[method] as any)(...args);
     editor?.focus();
   }
+}
+
+function stringifyArgs(args: unknown[]) {
+  return args.map(a => typeof a === 'string' ? `'${a}'` : a);
 }
 
 const App: React.FC = () => {
@@ -86,21 +98,28 @@ const App: React.FC = () => {
     <div className="c_app">
       <h1>SlateJS Editor Playground</h1>
 
-      <Editor
-        className="c_editor"
-        onChange={({ value }: OnChangeParam) => {
-          setValue(value);
-        }}
-        ref={editorRef}
-        value={value}
-      />
+      <div className="row">
+        <Editor
+          className="c_editor"
+          onChange={({ value }: OnChangeParam) => {
+            setValue(value);
+          }}
+          ref={editorRef}
+          value={value}
+        />
+        <button onClick={() => setValue(initialValue)}>Reset</button>
+      </div>
 
       <div className="row">
-        <pre className="c_value">
-          {JSON.stringify(value.toJS(), undefined, 2)}
-        </pre>
+        <div className="c_value">
+          <h2>Value</h2>
+          <pre>
+            {JSON.stringify(value.toJS(), undefined, 2)}
+          </pre>
+        </div>
 
         <div className="c_controls">
+          <h2>Editor Methods</h2>
           {
             Object.keys(state).map(key => {
               const args = state[key as keyof State];
@@ -114,7 +133,12 @@ const App: React.FC = () => {
                           key={i}
                           onChange={({ currentTarget }) => {
                             const payload = args.slice();
-                            payload[i] = currentTarget.value as any;
+
+                            const argValue = typeof payload[i] === 'number'
+                              ? isNaN(Number(currentTarget.value)) ? payload[i] : Number(currentTarget.value)
+                              : currentTarget.value;
+
+                            payload[i] = argValue;
 
                             const action = {
                               type: key,
@@ -130,7 +154,7 @@ const App: React.FC = () => {
                   }
                   <button
                     onClick={onClick(editorRef.current!, key as keyof State, ...args)}
-                  >{key}({args.join(',')})
+                  >{key}({stringifyArgs(args)})
                   </button>
                 </div>
               )

@@ -12,6 +12,11 @@ body {
   font-size: 16px;
 }
 
+.c_app {
+  margin: 0 auto;
+  width: 800px;
+}
+
 .c_control {
   display: flex;
   > * {
@@ -33,6 +38,7 @@ body {
 
 .c_editor {
   border: 1px solid $color-border;
+  flex-grow: 1;
   padding: 4px;
 }
 
@@ -49,6 +55,9 @@ button {
   border: 1px solid $color-border;
   cursor: pointer;
   padding: 8px 4px;
+  &:hover {
+    background-color: lighten(#eee, 4%);
+  }
 }
 
 pre {
