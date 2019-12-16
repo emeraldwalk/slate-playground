@@ -13,8 +13,17 @@ body {
 }
 
 .c_app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   margin: 0 auto;
+  overflow-y: hidden;
   width: 800px;
+}
+
+.c_additional-methods {
+  list-style: none;
+  overflow-y: scroll;
 }
 
 .c_control {
@@ -33,12 +42,18 @@ body {
 }
 
 .c_controls {
-  flex-basis: 200px;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 300px;
 }
 
 .c_editor {
   border: 1px solid $color-border;
   flex-grow: 1;
+  padding: 4px;
+}
+
+.c_filter {
   padding: 4px;
 }
 
@@ -48,6 +63,9 @@ body {
 
 .row {
   display: flex;
+  &:last-of-type {
+    overflow-y: hidden;
+  }
 }
 
 button {

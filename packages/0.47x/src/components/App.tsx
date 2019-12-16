@@ -90,9 +90,24 @@ const App: React.FC = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const [additionalMethodNames, setAdditionalMethodNames] = useState<string[]>([]);
+  const [filterMethodsBy, setFilterMethodsBy] = useState('');
+
   useEffect(() => {
     editorRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      const methodNames = Object
+        .keys(editorRef.current)
+        .filter(key => typeof editorRef.current![key as keyof Editor] === 'function' && !(key in state));
+
+      methodNames.sort();
+
+      setAdditionalMethodNames(methodNames);
+    }
+  }, [state]);
 
   return (
     <div className="c_app">
@@ -160,6 +175,23 @@ const App: React.FC = () => {
               )
             })
           }
+
+          <h2>Additional Methods</h2>
+          <input
+            className="c_filter"
+            onChange={({ currentTarget }) => setFilterMethodsBy(currentTarget.value)}
+            placeholder="Filter..."
+            value={filterMethodsBy}
+          />
+          <ul className="c_additional-methods">
+            {
+              additionalMethodNames
+                .filter(
+                  method => filterMethodsBy === '' || method.toLowerCase().indexOf(filterMethodsBy.toLowerCase()) > -1
+                )
+                .map(method => <li key={method}>{method}</li>)
+            }
+          </ul>
         </div>
       </div>
     </div>
