@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "yarn workspace @slate-playground/0.47x build",
     "start": "yarn workspace @slate-playground/0.47x start"
   },
   "workspaces": [
