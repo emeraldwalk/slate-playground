@@ -56,6 +56,14 @@ body {
   padding: 4px;
 }
 
+.c_node,
+.c_node-list {
+  padding-left: 1rem;
+  &.selected {
+    background-color: #eee;
+  }
+}
+
 .c_value {
   display: flex;
   flex-direction: column;

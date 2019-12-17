@@ -1,6 +1,7 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { Editor, OnChangeParam } from 'slate-react';
-import { Value } from 'slate';
+import { Node as SlateNode, Value } from 'slate';
+import { Node } from '.';
 
 const initialValue: Value = Value.fromJS({
   document: {
@@ -125,6 +126,38 @@ function onClick<M extends keyof State>(
   }
 }
 
+function* selectedNodes(value: Value): IterableIterator<SlateNode> {
+  const stack: SlateNode[] = [value.document];
+
+  let isInSelection = false;
+  let lastParent: SlateNode | undefined = undefined;
+
+  while (stack.length > 0) {
+    const node = stack.shift()!;
+
+    if (node.key === value.selection.start.key) {
+      isInSelection = true;
+    }
+
+    if (node.object !== 'text') {
+      lastParent = node;
+      stack.unshift(...node.nodes.toArray());
+    }
+    else if (isInSelection) {
+      if (lastParent) {
+        yield lastParent;
+        lastParent = undefined;
+      }
+
+      yield node;
+    }
+
+    if (node.key === value.selection.end.key) {
+      isInSelection = false;
+    }
+  }
+}
+
 function stringifyArgs(args: unknown[]) {
   return args.map(a => typeof a === 'string' ? `'${a}'` : a);
 }
@@ -138,9 +171,20 @@ const App: React.FC = () => {
   const [additionalMethodNames, setAdditionalMethodNames] = useState<string[]>([]);
   const [filterMethodsBy, setFilterMethodsBy] = useState('');
 
-  function filter(method: string) {
+  const filter = useCallback((method: string) => {
     return filterMethodsBy === '' || method.toLowerCase().indexOf(filterMethodsBy.toLowerCase()) > -1;
-  }
+  }, [filterMethodsBy]);
+
+  const isSelected = useCallback((node: SlateNode) => {
+    return Array.from(selectedNodes(value)).indexOf(node) > -1;
+  }, [value]);
+
+  const onSelect = useCallback((node: SlateNode) => {
+    editorRef.current!.moveAnchorToStartOfNode(node);
+    editorRef.current!.moveFocusToEndOfNode(node);
+
+    editorRef.current!.focus();
+  }, []);
 
   useEffect(() => {
     editorRef.current?.focus();
@@ -178,9 +222,11 @@ const App: React.FC = () => {
         <div className="c_value">
           <h2>Value</h2>
           <div className="scroll">
-            <pre>
-              {JSON.stringify(value.toJS(), undefined, 2)}
-            </pre>
+            <Node
+              isSelected={isSelected}
+              onSelect={onSelect}
+              node={value.document}
+            />
           </div>
         </div>
 
