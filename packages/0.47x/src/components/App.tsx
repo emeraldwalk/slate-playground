@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo,  useReducer, useRef, useState } from 'react';
 import { Editor, OnChangeParam } from 'slate-react';
 import { Node as SlateNode, Value } from 'slate';
 import { Node } from '.';
+import { nodeTree, selectedTextNodes } from '../utils/data';
 
 const initialValue: Value = Value.fromJS({
   document: {
@@ -126,37 +127,7 @@ function onClick<M extends keyof State>(
   }
 }
 
-function* selectedNodes(value: Value): IterableIterator<SlateNode> {
-  const stack: SlateNode[] = [value.document];
 
-  let isInSelection = false;
-  let lastParent: SlateNode | undefined = undefined;
-
-  while (stack.length > 0) {
-    const node = stack.shift()!;
-
-    if (node.key === value.selection.start.key) {
-      isInSelection = true;
-    }
-
-    if (node.object !== 'text') {
-      lastParent = node;
-      stack.unshift(...node.nodes.toArray());
-    }
-    else if (isInSelection) {
-      if (lastParent) {
-        yield lastParent;
-        lastParent = undefined;
-      }
-
-      yield node;
-    }
-
-    if (node.key === value.selection.end.key) {
-      isInSelection = false;
-    }
-  }
-}
 
 function stringifyArgs(args: unknown[]) {
   return args.map(a => typeof a === 'string' ? `'${a}'` : a);
@@ -175,9 +146,13 @@ const App: React.FC = () => {
     return filterMethodsBy === '' || method.toLowerCase().indexOf(filterMethodsBy.toLowerCase()) > -1;
   }, [filterMethodsBy]);
 
-  const isSelected = useCallback((node: SlateNode) => {
-    return Array.from(selectedNodes(value)).indexOf(node) > -1;
-  }, [value]);
+  const node = useMemo(
+    () => {
+      const selectedTextKeys = Array.from(selectedTextNodes(value)).map(n => n.key);
+      return nodeTree(value.document, selectedTextKeys);
+    },
+    [value]
+  );
 
   const onSelect = useCallback((node: SlateNode) => {
     editorRef.current!.moveAnchorToStartOfNode(node);
@@ -223,9 +198,8 @@ const App: React.FC = () => {
           <h2>Value</h2>
           <div className="scroll">
             <Node
-              isSelected={isSelected}
               onSelect={onSelect}
-              node={value.document}
+              node={node}
             />
           </div>
         </div>
