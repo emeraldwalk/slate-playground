@@ -23,7 +23,6 @@ body {
 
 .c_additional-methods {
   list-style: none;
-  overflow-y: scroll;
 }
 
 .c_control {
@@ -58,6 +57,8 @@ body {
 }
 
 .c_value {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 
@@ -66,6 +67,10 @@ body {
   &:last-of-type {
     overflow-y: hidden;
   }
+}
+
+.scroll {
+  overflow-y: scroll;
 }
 
 button {

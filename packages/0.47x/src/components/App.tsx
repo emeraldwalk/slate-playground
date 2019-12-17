@@ -138,6 +138,10 @@ const App: React.FC = () => {
   const [additionalMethodNames, setAdditionalMethodNames] = useState<string[]>([]);
   const [filterMethodsBy, setFilterMethodsBy] = useState('');
 
+  function filter(method: string) {
+    return filterMethodsBy === '' || method.toLowerCase().indexOf(filterMethodsBy.toLowerCase()) > -1;
+  }
+
   useEffect(() => {
     editorRef.current?.focus();
   }, []);
@@ -173,70 +177,74 @@ const App: React.FC = () => {
       <div className="row">
         <div className="c_value">
           <h2>Value</h2>
-          <pre>
-            {JSON.stringify(value.toJS(), undefined, 2)}
-          </pre>
+          <div className="scroll">
+            <pre>
+              {JSON.stringify(value.toJS(), undefined, 2)}
+            </pre>
+          </div>
         </div>
 
         <div className="c_controls">
           <h2>Editor Methods</h2>
-          {
-            Object.keys(state).map(key => {
-              const args = state[key as keyof State];
-
-              return (
-                <div className="c_control" key={key}>
-                  {
-                    (args as unknown[]).map((arg, i) => {
-                      return typeof arg === 'string' || typeof arg === 'number' ? (
-                        <input
-                          key={i}
-                          onChange={({ currentTarget }) => {
-                            const payload = args.slice();
-
-                            const argValue = typeof payload[i] === 'number'
-                              ? isNaN(Number(currentTarget.value)) ? payload[i] : Number(currentTarget.value)
-                              : currentTarget.value;
-
-                            payload[i] = argValue;
-
-                            const action = {
-                              type: key,
-                              payload,
-                            } as Action;
-
-                            dispatch(action);
-                          }}
-                          value={arg}
-                        />
-                      ) : null
-                    })
-                  }
-                  <button
-                    onClick={onClick(editorRef.current!, key as keyof State, ...args)}
-                  >{key}({stringifyArgs(args)})
-                  </button>
-                </div>
-              )
-            })
-          }
-
-          <h2>Additional Methods</h2>
           <input
             className="c_filter"
             onChange={({ currentTarget }) => setFilterMethodsBy(currentTarget.value)}
             placeholder="Filter..."
             value={filterMethodsBy}
           />
-          <ul className="c_additional-methods">
+          <div className="scroll">
             {
-              additionalMethodNames
-                .filter(
-                  method => filterMethodsBy === '' || method.toLowerCase().indexOf(filterMethodsBy.toLowerCase()) > -1
+              Object.keys(state).filter(filter).map(key => {
+                const args = state[key as keyof State];
+
+                return (
+                  <div className="c_control" key={key}>
+                    {
+                      (args as unknown[]).map((arg, i) => {
+                        return typeof arg === 'string' || typeof arg === 'number' ? (
+                          <input
+                            key={i}
+                            onChange={({ currentTarget }) => {
+                              const payload = args.slice();
+
+                              const argValue = typeof payload[i] === 'number'
+                                ? isNaN(Number(currentTarget.value)) ? payload[i] : Number(currentTarget.value)
+                                : currentTarget.value;
+
+                              payload[i] = argValue;
+
+                              const action = {
+                                type: key,
+                                payload,
+                              } as Action;
+
+                              dispatch(action);
+                            }}
+                            value={arg}
+                          />
+                        ) : null
+                      })
+                    }
+                    <button
+                      onClick={onClick(editorRef.current!, key as keyof State, ...args)}
+                    >{key}({stringifyArgs(args)})
+                  </button>
+                  </div>
                 )
-                .map(method => <li key={method}>{method}</li>)
+              })
             }
-          </ul>
+
+            <h2>Additional Methods</h2>
+            <ul className="c_additional-methods">
+              {
+                additionalMethodNames
+                  .filter(
+                    filter
+                  )
+                  .map(method => <li key={method}>{method}</li>)
+              }
+            </ul>
+          </div>
         </div>
       </div>
     </div>
