@@ -1,32 +1,19 @@
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import { Editor } from 'slate-react';
 
+type MethodKey = { [P in keyof Required<Editor>]: Editor[P] extends Function ? P : never }[keyof Editor];
+
 export type Action = {
-  [P in keyof State]: { type: P, payload: State[P] }
-}[keyof State];
+  [P in MethodKey]: { type: P, payload: State[P] }
+}[MethodKey];
 
-export interface State {
-  insertText: [string],
-  moveAnchorForward: [number],
-  moveAnchorToEndOfDocument: [],
-  moveAnchorToStartOfDocument: [],
-  moveEndForward: [number],
-  moveEndToEndOfDocument: [],
-  moveEndToStartOfDocument: [],
-  moveFocusForward: [number],
-  moveFocusToEndOfDocument: [],
-  moveFocusToStartOfDocument: [],
-  moveStartForward: [number],
-  moveStartToEndOfDocument: [],
-  moveStartToStartOfDocument: [],
-  moveToEndOfDocument: [],
-  moveToStartOfDocument: [],
-  moveToStartOfNextBlock: [],
-  moveToEndOfNextBlock: [],
-  splitBlock: [number],
-}
+export type State = {
+  [P in MethodKey]: Editor[P] extends (...args: infer A) => any
+    ? A
+    : never
+};
 
-const initialState: State = {
+const initialState: Partial<State> = {
   moveToStartOfDocument: [],
   moveToEndOfDocument: [],
   moveAnchorForward: [1],
@@ -48,10 +35,93 @@ const initialState: State = {
   moveToEndOfNextBlock: [],
   splitBlock: [1],
   insertText: [''],
+
+  moveToStartOfBlock: [],
+  moveAnchorBackward: [1],
+  moveAnchorTo: [''],
+  moveAnchorToEndOfBlock: [],
+  moveAnchorToEndOfInline: [],
+  moveAnchorToEndOfNextBlock: [],
+  moveAnchorToEndOfNextInline: [],
+  moveAnchorToEndOfNextText: [],
+  // moveAnchorToEndOfNode: [],
+  moveAnchorToEndOfPreviousBlock: [],
+  moveAnchorToEndOfPreviousInline: [],
+  moveAnchorToEndOfPreviousText: [],
+  moveAnchorToEndOfText: [],
+  moveAnchorToStartOfBlock: [],
+  moveAnchorToStartOfInline: [],
+  moveAnchorToStartOfNextBlock: [],
+  moveAnchorToStartOfNextInline: [],
+  moveAnchorToStartOfNextText: [],
+  // moveAnchorToStartOfNode: [],
+  moveAnchorToStartOfPreviousBlock: [],
+  moveAnchorToStartOfPreviousInline: [],
+  moveAnchorToStartOfPreviousText: [],
+  moveAnchorToStartOfText: [],
+  moveAnchorWordBackward: [],
+  moveAnchorWordForward: [],
+  moveBackward: [1],
+  moveEndBackward: [1],
+  moveEndTo: ['', 0],
+  moveEndToEndOfBlock: [],
+  moveEndToEndOfInline: [],
+  moveEndToEndOfNextBlock: [],
+  moveEndToEndOfNextInline: [],
+  moveEndToEndOfNextText: [],
+  // moveEndToEndOfNode: [],
+  moveEndToEndOfPreviousBlock: [],
+  moveEndToEndOfPreviousInline: [],
+  moveEndToEndOfPreviousText: [],
+  moveEndToEndOfText: [],
+  moveEndToStartOfBlock: [],
+  moveEndToStartOfInline: [],
+  moveEndToStartOfNextBlock: [],
+  moveEndToStartOfNextInline: [],
+  moveEndToStartOfNextText: [],
+  // moveEndToStartOfNode: [],
+  moveEndToStartOfPreviousBlock: [],
+  moveEndToStartOfPreviousInline: [],
+  moveEndToStartOfPreviousText: [],
+  moveEndToStartOfText: [],
+  moveEndWordBackward: [],
+  moveEndWordForward: [],
+  moveFocusBackward: [1],
+  moveFocusTo: ['', 0],
+  moveFocusToEndOfBlock: [],
+  moveFocusToEndOfInline: [],
+  moveFocusToEndOfNextBlock: [],
+  moveFocusToEndOfNextInline: [],
+  moveFocusToEndOfNextText: [],
+  // moveFocusToEndOfNode: [],
+  moveFocusToEndOfPreviousBlock: [],
+  moveFocusToEndOfPreviousInline: [],
+  moveFocusToEndOfPreviousText: [],
+  moveFocusToEndOfText: [],
+  moveFocusToStartOfBlock: [],
+  moveFocusToStartOfInline: [],
+  moveFocusToStartOfNextBlock: [],
+  moveFocusToStartOfNextInline: [],
+  moveFocusToStartOfNextText: [],
+  // moveFocusToStartOfNode: [],
+  moveFocusToStartOfPreviousBlock: [],
+  moveFocusToStartOfPreviousInline: [],
+  moveFocusToStartOfPreviousText: [],
+  moveFocusToStartOfText: [],
+  moveFocusWordBackward: [],
+  moveFocusWordForward: [],
+  moveForward: [1],
+  moveNodeByKey: ['', '', 0],
+  // moveNodeByPath: [],
+  moveStartBackward: [1],
+  moveStartTo: ['', 0],
+  moveStartToEndOfBlock: [],
+
+  // TODO
 };
 
 function reducer(
-  state: State,
+  state: Partial<State>,
   action: Action,
 ) {
   return {

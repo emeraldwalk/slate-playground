@@ -97,7 +97,7 @@ const App: React.FC = () => {
           <div className="scroll">
             {
               filteredMethodNames.map(key => {
-                const args = methodState[key];
+                const args = methodState[key]!;
 
                 return (
                   <div className="c_control" key={key}>
@@ -136,7 +136,7 @@ const App: React.FC = () => {
               })
             }
 
-            <h2>Additional Methods</h2>
+            <h2>TODO: Additional Methods</h2>
             <ul className="c_additional-methods">
               {
                 filteredAdditionalMethodNames
