@@ -61,7 +61,7 @@ function reducer(
 }
 
 export function useMethodState(
-  editor?: Editor
+  editor: Editor | null
 ) {
   const [methodState, dispatch] = useReducer(reducer, initialState);
   const [additionalMethodNames, setAdditionalMethodNames] = useState<string[]>([]);

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Value } from 'slate';
 import { nodeTree, selectedTextNodes } from './utils';
 
-export function useNode(
+export function useDocument(
   value: Value,
 ) {
   return useMemo(

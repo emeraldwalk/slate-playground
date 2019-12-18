@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor, OnChangeParam } from 'slate-react';
 import { Node as SlateNode } from 'slate';
-import { Node } from '.';
+import { Node, Selection } from '.';
 import { useFilter } from '../data/filter';
 import { Action, useMethodState, State } from '../data/methods';
-import { useNode } from '../data/node';
+import { useDocument } from '../data/node';
 import { useValue } from '../data/value';
 
 function onClick<M extends keyof State>(
@@ -33,7 +33,7 @@ const App: React.FC = () => {
     dispatch,
     methodNames,
     methodState,
-  } = useMethodState();
+  } = useMethodState(editorRef.current);
 
   const filteredAdditionalMethodNames = useFilter(
     additionalMethodNames,
@@ -45,7 +45,7 @@ const App: React.FC = () => {
     filterBy
   );
 
-  const node = useNode(value);
+  const documentNode = useDocument(value);
 
   const onSelect = useCallback((node: SlateNode) => {
     editorRef.current!.moveAnchorToStartOfNode(node);
@@ -71,16 +71,22 @@ const App: React.FC = () => {
           ref={editorRef}
           value={value}
         />
-        <button onClick={() => setValue(initialValue)}>Reset</button>
+        <button onClick={() => {
+          setValue(initialValue);
+        }}>Reset</button>
       </div>
 
       <div className="row">
-        <div className="c_value">
-          <h2>Value</h2>
+        <Selection
+          selection={value.selection}
+        />
+
+        <div className="c_document">
+          <h2>Document</h2>
           <div className="scroll">
             <Node
               onSelect={onSelect}
-              node={node}
+              node={documentNode}
             />
           </div>
         </div>

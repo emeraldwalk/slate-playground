@@ -64,9 +64,16 @@ body {
   }
 }
 
-.c_value {
+.c_document {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  > .scroll > .c_node {
+    margin-left: -1rem;
+  }
+}
+
+.c_selection {
   flex-grow: 1;
 }
 
