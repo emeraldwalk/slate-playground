@@ -1,6 +1,6 @@
 import React from 'react';
 import { Node as SlateNode } from 'slate';
-import { Node as DataNode } from '../utils/data';
+import { Node as DataNode } from '../data/utils';
 
 export interface NodeProps {
   node: DataNode,

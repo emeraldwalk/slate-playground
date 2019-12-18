@@ -1,120 +1,11 @@
-import React, { useCallback, useEffect, useMemo,  useReducer, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor, OnChangeParam } from 'slate-react';
-import { Node as SlateNode, Value } from 'slate';
+import { Node as SlateNode } from 'slate';
 import { Node } from '.';
-import { nodeTree, selectedTextNodes } from '../utils/data';
-
-const initialValue: Value = Value.fromJS({
-  document: {
-    nodes: [
-      {
-        nodes: [
-          {
-            nodes: [
-              {
-                object: 'text',
-                text: 'Block A1',
-              },
-            ],
-            object: 'block',
-            type: 'paragraph',
-          },
-          {
-            nodes: [
-              {
-                object: 'text',
-                text: 'Block A2',
-              },
-            ],
-            object: 'block',
-            type: 'paragraph',
-          }
-        ],
-        object: 'block',
-        type: 'div',
-      },
-      {
-        nodes: [
-          {
-            object: 'text',
-            text: 'Block B',
-          },
-        ],
-        object: 'block',
-        type: 'paragraph',
-      },
-      {
-        nodes: [
-          {
-            object: 'text',
-            text: 'Block C'
-          },
-        ],
-        object: 'block',
-        type: 'paragraph',
-      }
-    ]
-  }
-});
-
-type Action = {
-  [P in keyof State]: { type: P, payload: State[P] }
-}[keyof State];
-
-interface State {
-  insertText: [string],
-  moveAnchorForward: [number],
-  moveAnchorToEndOfDocument: [],
-  moveAnchorToStartOfDocument: [],
-  moveEndForward: [number],
-  moveEndToEndOfDocument: [],
-  moveEndToStartOfDocument: [],
-  moveFocusForward: [number],
-  moveFocusToEndOfDocument: [],
-  moveFocusToStartOfDocument: [],
-  moveStartForward: [number],
-  moveStartToEndOfDocument: [],
-  moveStartToStartOfDocument: [],
-  moveToEndOfDocument: [],
-  moveToStartOfDocument: [],
-  moveToStartOfNextBlock: [],
-  moveToEndOfNextBlock: [],
-  splitBlock: [number],
-}
-
-const initialState: State = {
-  moveToStartOfDocument: [],
-  moveToEndOfDocument: [],
-  moveAnchorForward: [1],
-  moveFocusForward: [1],
-  moveStartForward: [1],
-  moveEndForward: [1],
-
-  moveStartToStartOfDocument: [],
-  moveStartToEndOfDocument: [],
-  moveEndToStartOfDocument: [],
-  moveEndToEndOfDocument: [],
-
-  moveAnchorToStartOfDocument: [],
-  moveAnchorToEndOfDocument: [],
-  moveFocusToStartOfDocument: [],
-  moveFocusToEndOfDocument: [],
-
-  moveToStartOfNextBlock: [],
-  moveToEndOfNextBlock: [],
-  splitBlock: [1],
-  insertText: [''],
-};
-
-function reducer(
-  state: State,
-  action: Action,
-) {
-  return {
-    ...state,
-    [action.type]: action.payload,
-  };
-}
+import { useFilter } from '../data/filter';
+import { Action, useMethodState, State } from '../data/methods';
+import { useNode } from '../data/node';
+import { useValue } from '../data/value';
 
 function onClick<M extends keyof State>(
   editor: Editor | null,
@@ -127,32 +18,34 @@ function onClick<M extends keyof State>(
   }
 }
 
-
-
 function stringifyArgs(args: unknown[]) {
   return args.map(a => typeof a === 'string' ? `'${a}'` : a);
 }
 
 const App: React.FC = () => {
   const editorRef = useRef<Editor>(null);
-  const [value, setValue] = useState(initialValue);
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { initialValue, setValue, value } = useValue();
+  const [filterBy, setFilterBy] = useState('');
 
-  const [additionalMethodNames, setAdditionalMethodNames] = useState<string[]>([]);
-  const [filterMethodsBy, setFilterMethodsBy] = useState('');
+  const {
+    additionalMethodNames,
+    dispatch,
+    methodNames,
+    methodState,
+  } = useMethodState();
 
-  const filter = useCallback((method: string) => {
-    return filterMethodsBy === '' || method.toLowerCase().indexOf(filterMethodsBy.toLowerCase()) > -1;
-  }, [filterMethodsBy]);
-
-  const node = useMemo(
-    () => {
-      const selectedTextKeys = Array.from(selectedTextNodes(value)).map(n => n.key);
-      return nodeTree(value.document, selectedTextKeys);
-    },
-    [value]
+  const filteredAdditionalMethodNames = useFilter(
+    additionalMethodNames,
+    filterBy
   );
+
+  const filteredMethodNames = useFilter(
+    methodNames,
+    filterBy
+  );
+
+  const node = useNode(value);
 
   const onSelect = useCallback((node: SlateNode) => {
     editorRef.current!.moveAnchorToStartOfNode(node);
@@ -164,18 +57,6 @@ const App: React.FC = () => {
   useEffect(() => {
     editorRef.current?.focus();
   }, []);
-
-  useEffect(() => {
-    if (editorRef.current) {
-      const methodNames = Object
-        .keys(editorRef.current)
-        .filter(key => typeof editorRef.current![key as keyof Editor] === 'function' && !(key in state));
-
-      methodNames.sort();
-
-      setAdditionalMethodNames(methodNames);
-    }
-  }, [state]);
 
   return (
     <div className="c_app">
@@ -208,14 +89,14 @@ const App: React.FC = () => {
           <h2>Editor Methods</h2>
           <input
             className="c_filter"
-            onChange={({ currentTarget }) => setFilterMethodsBy(currentTarget.value)}
+            onChange={({ currentTarget }) => setFilterBy(currentTarget.value)}
             placeholder="Filter..."
-            value={filterMethodsBy}
+            value={filterBy}
           />
           <div className="scroll">
             {
-              Object.keys(state).filter(filter).map(key => {
-                const args = state[key as keyof State];
+              filteredMethodNames.map(key => {
+                const args = methodState[key];
 
                 return (
                   <div className="c_control" key={key}>
@@ -257,10 +138,7 @@ const App: React.FC = () => {
             <h2>Additional Methods</h2>
             <ul className="c_additional-methods">
               {
-                additionalMethodNames
-                  .filter(
-                    filter
-                  )
+                filteredAdditionalMethodNames
                   .map(method => <li key={method}>{method}</li>)
               }
             </ul>
