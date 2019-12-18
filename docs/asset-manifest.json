@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/slate-playground/static/css/main.766b7641.chunk.css",
-    "main.js": "/slate-playground/static/js/main.349283b5.chunk.js",
-    "main.js.map": "/slate-playground/static/js/main.349283b5.chunk.js.map",
+    "main.css": "/slate-playground/static/css/main.145b7933.chunk.css",
+    "main.js": "/slate-playground/static/js/main.7a305189.chunk.js",
+    "main.js.map": "/slate-playground/static/js/main.7a305189.chunk.js.map",
     "runtime-main.js": "/slate-playground/static/js/runtime-main.f7d8e6a8.js",
     "runtime-main.js.map": "/slate-playground/static/js/runtime-main.f7d8e6a8.js.map",
     "static/css/2.9a2181d9.chunk.css": "/slate-playground/static/css/2.9a2181d9.chunk.css",
-    "static/js/2.6aaf54b5.chunk.js": "/slate-playground/static/js/2.6aaf54b5.chunk.js",
-    "static/js/2.6aaf54b5.chunk.js.map": "/slate-playground/static/js/2.6aaf54b5.chunk.js.map",
+    "static/js/2.789ddd4e.chunk.js": "/slate-playground/static/js/2.789ddd4e.chunk.js",
+    "static/js/2.789ddd4e.chunk.js.map": "/slate-playground/static/js/2.789ddd4e.chunk.js.map",
     "index.html": "/slate-playground/index.html",
-    "precache-manifest.1b8c32f71692e61a5b5e3e22ff0dfc0f.js": "/slate-playground/precache-manifest.1b8c32f71692e61a5b5e3e22ff0dfc0f.js",
+    "precache-manifest.afad211edb2ff081b92c81e2b2fd0965.js": "/slate-playground/precache-manifest.afad211edb2ff081b92c81e2b2fd0965.js",
     "service-worker.js": "/slate-playground/service-worker.js",
     "static/css/2.9a2181d9.chunk.css.map": "/slate-playground/static/css/2.9a2181d9.chunk.css.map",
-    "static/css/main.766b7641.chunk.css.map": "/slate-playground/static/css/main.766b7641.chunk.css.map",
-    "static/js/2.6aaf54b5.chunk.js.LICENSE": "/slate-playground/static/js/2.6aaf54b5.chunk.js.LICENSE",
+    "static/css/main.145b7933.chunk.css.map": "/slate-playground/static/css/main.145b7933.chunk.css.map",
+    "static/js/2.789ddd4e.chunk.js.LICENSE": "/slate-playground/static/js/2.789ddd4e.chunk.js.LICENSE",
     "static/media/index.css": "/slate-playground/static/media/open-sans-latin-800italic.c62c3eea.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.f7d8e6a8.js",
     "static/css/2.9a2181d9.chunk.css",
-    "static/js/2.6aaf54b5.chunk.js",
-    "static/css/main.766b7641.chunk.css",
-    "static/js/main.349283b5.chunk.js"
+    "static/js/2.789ddd4e.chunk.js",
+    "static/css/main.145b7933.chunk.css",
+    "static/js/main.7a305189.chunk.js"
   ]
 }
