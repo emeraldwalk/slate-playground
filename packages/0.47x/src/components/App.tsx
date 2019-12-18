@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor, OnChangeParam } from 'slate-react';
 import { Node as SlateNode } from 'slate';
-import { Node, Selection } from '.';
+import { Document, Selection } from '.';
 import { useFilter } from '../data/filter';
 import { Action, useMethodState, State } from '../data/methods';
 import { useDocument } from '../data/node';
@@ -81,15 +81,10 @@ const App: React.FC = () => {
           selection={value.selection}
         />
 
-        <div className="c_document">
-          <h2>Document</h2>
-          <div className="scroll">
-            <Node
-              onSelect={onSelect}
-              node={documentNode}
-            />
-          </div>
-        </div>
+        <Document
+          onSelect={onSelect}
+          node={documentNode}
+        />
 
         <div className="c_controls">
           <h2>Editor Methods</h2>
