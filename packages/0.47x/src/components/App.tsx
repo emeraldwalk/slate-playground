@@ -14,7 +14,6 @@ function onClick<M extends keyof State>(
   ...args: State[M]
 ) {
   return function doOnClick() {
-    console.log(...args);
     (editor?.[method] as any)(...args);
     editor?.focus();
   }
@@ -42,8 +41,10 @@ const App: React.FC = () => {
   const {
     additionalMethodNames,
     dispatch,
+    dispatchPending,
     methodNames,
     methodState,
+    pendingMethodState,
   } = useMethodState(editorRef.current, selectedNodes[0]);
 
   const filteredAdditionalMethodNames = useFilter(
@@ -106,43 +107,63 @@ const App: React.FC = () => {
           <div className="scroll">
             {
               filteredMethodNames.map(key => {
-                const args = methodState[key]!;
+                const pendingArgs = pendingMethodState[key]!;
+                const currentArgs = methodState[key]!;
 
                 return (
                   <div className="c_control" key={key}>
                     {
-                      (args as unknown[]).map((arg, i) => {
-                        if (arg instanceof List) {
-                          arg = (arg as any).toArray().join(',');
+                      (pendingArgs as unknown[]).map((pendingArg, i) => {
+                        if (pendingArg instanceof List) {
+                          pendingArg = (pendingArg as any).toArray().join(',');
                         }
 
-                        return typeof arg === 'string' || typeof arg === 'number' ? (
+                        return typeof pendingArg === 'string' || typeof pendingArg === 'number' ? (
                           <input
                             key={i}
-                            onChange={({ currentTarget }) => {
-                              const payload = args.slice();
+                            onBlur={() => {
+                              const payload = pendingArgs.slice();
 
-                              const argValue = typeof payload[i] === 'number'
-                                ? isNaN(Number(currentTarget.value)) ? payload[i] : Number(currentTarget.value)
-                                : payload[i] instanceof List ? List([1, 1, 1]) : currentTarget.value;
-
-                              payload[i] = argValue;
+                              if (typeof currentArgs[i] === 'number' && isNaN(payload[i])) {
+                                payload[i] = currentArgs[i];
+                              }
+                              else if (currentArgs[i] instanceof List) {
+                                const values = String(pendingArgs[i]).split(',').map(v => Number(v.trim()));
+                                if (values.some(isNaN)) {
+                                  payload[i] = currentArgs[i];
+                                }
+                                else {
+                                  payload[i] = List(values);
+                                }
+                              }
 
                               const action = {
                                 type: key,
                                 payload,
                               } as Action;
 
+                              dispatchPending(action);
                               dispatch(action);
                             }}
-                            value={arg}
+                            onChange={({ currentTarget }) => {
+                              const payload = pendingArgs.slice();
+                              payload[i] = currentTarget.value;
+
+                              const action = {
+                                type: key,
+                                payload,
+                              } as Action;
+
+                              dispatchPending(action);
+                            }}
+                            value={pendingArg}
                           />
                         ) : null
                       })
                     }
                     <button
-                      onClick={onClick(editorRef.current!, key as keyof State, ...args)}
-                    >{key}({stringifyArgs(args)})
+                      onClick={onClick(editorRef.current!, key as keyof State, ...pendingArgs)}
+                    >{key}({stringifyArgs(currentArgs)})
                   </button>
                   </div>
                 )

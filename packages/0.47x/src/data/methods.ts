@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import { Node } from 'slate';
 import { Editor } from 'slate-react';
-// import { List } from 'immutable';
+import { List } from 'immutable';
 
 type MethodKey = { [P in keyof Required<Editor>]: Editor[P] extends Function ? P : never }[keyof Editor];
 
@@ -119,7 +119,7 @@ const initialState = (
   moveFocusWordForward: [],
   moveForward: [1],
   moveNodeByKey: ['', '', 0],
-  // moveNodeByPath: [List<number>([0, 0]), List<number>([0, 0]), 0],
+  moveNodeByPath: [List<number>([0, 0]), List<number>([0, 0]), 0],
   moveStartBackward: [1],
   moveStartTo: [node.key, 0],
   moveStartToEndOfBlock: [],
@@ -189,6 +189,7 @@ export function useMethodState(
   node: Node,
 ) {
   const [methodState, dispatch] = useReducer(reducer, initialState(node));
+  const [pendingMethodState, dispatchPending] = useReducer(reducer, methodState);
   const [additionalMethodNames, setAdditionalMethodNames] = useState<string[]>([]);
 
   const methodNames = useMemo(
@@ -211,7 +212,9 @@ export function useMethodState(
   return {
     additionalMethodNames,
     dispatch,
+    dispatchPending,
     methodNames,
     methodState,
+    pendingMethodState,
   };
 }
