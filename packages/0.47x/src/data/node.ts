@@ -7,8 +7,13 @@ export function useDocument(
 ) {
   return useMemo(
     () => {
-      const selectedTextKeys = Array.from(selectedTextNodes(value)).map(n => n.key);
-      return nodeTree(value.document, selectedTextKeys);
+      const selectedNodes = Array.from(selectedTextNodes(value));
+      const selectedTextKeys = selectedNodes.map(n => n.key);
+
+      return {
+        documentNode: nodeTree(value.document, selectedTextKeys, []),
+        selectedNodes,
+      };
     },
     [value]
   );

@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useReducer, useState } from 'react';
+import { Node } from 'slate';
 import { Editor } from 'slate-react';
+// import { List } from 'immutable';
 
 type MethodKey = { [P in keyof Required<Editor>]: Editor[P] extends Function ? P : never }[keyof Editor];
 
 export type Action = {
-  [P in MethodKey]: { type: P, payload: State[P] }
+  [P in MethodKey]: {
+    type: P,
+    payload: State[P],
+  }
 }[MethodKey];
 
 export type State = {
@@ -13,7 +18,9 @@ export type State = {
     : never
 };
 
-const initialState: Partial<State> = {
+const initialState = (
+  node: Node,
+): Partial<State> => ({
   moveToStartOfDocument: [],
   moveToEndOfDocument: [],
   moveAnchorForward: [1],
@@ -44,7 +51,7 @@ const initialState: Partial<State> = {
   moveAnchorToEndOfNextBlock: [],
   moveAnchorToEndOfNextInline: [],
   moveAnchorToEndOfNextText: [],
-  // moveAnchorToEndOfNode: [],
+  moveAnchorToEndOfNode: [node],
   moveAnchorToEndOfPreviousBlock: [],
   moveAnchorToEndOfPreviousInline: [],
   moveAnchorToEndOfPreviousText: [],
@@ -54,7 +61,7 @@ const initialState: Partial<State> = {
   moveAnchorToStartOfNextBlock: [],
   moveAnchorToStartOfNextInline: [],
   moveAnchorToStartOfNextText: [],
-  // moveAnchorToStartOfNode: [],
+  moveAnchorToStartOfNode: [node],
   moveAnchorToStartOfPreviousBlock: [],
   moveAnchorToStartOfPreviousInline: [],
   moveAnchorToStartOfPreviousText: [],
@@ -69,7 +76,7 @@ const initialState: Partial<State> = {
   moveEndToEndOfNextBlock: [],
   moveEndToEndOfNextInline: [],
   moveEndToEndOfNextText: [],
-  // moveEndToEndOfNode: [],
+  moveEndToEndOfNode: [node],
   moveEndToEndOfPreviousBlock: [],
   moveEndToEndOfPreviousInline: [],
   moveEndToEndOfPreviousText: [],
@@ -79,7 +86,7 @@ const initialState: Partial<State> = {
   moveEndToStartOfNextBlock: [],
   moveEndToStartOfNextInline: [],
   moveEndToStartOfNextText: [],
-  // moveEndToStartOfNode: [],
+  moveEndToStartOfNode: [node],
   moveEndToStartOfPreviousBlock: [],
   moveEndToStartOfPreviousInline: [],
   moveEndToStartOfPreviousText: [],
@@ -93,7 +100,7 @@ const initialState: Partial<State> = {
   moveFocusToEndOfNextBlock: [],
   moveFocusToEndOfNextInline: [],
   moveFocusToEndOfNextText: [],
-  // moveFocusToEndOfNode: [],
+  moveFocusToEndOfNode: [node],
   moveFocusToEndOfPreviousBlock: [],
   moveFocusToEndOfPreviousInline: [],
   moveFocusToEndOfPreviousText: [],
@@ -103,7 +110,7 @@ const initialState: Partial<State> = {
   moveFocusToStartOfNextBlock: [],
   moveFocusToStartOfNextInline: [],
   moveFocusToStartOfNextText: [],
-  // moveFocusToStartOfNode: [],
+  moveFocusToStartOfNode: [node],
   moveFocusToStartOfPreviousBlock: [],
   moveFocusToStartOfPreviousInline: [],
   moveFocusToStartOfPreviousText: [],
@@ -112,13 +119,60 @@ const initialState: Partial<State> = {
   moveFocusWordForward: [],
   moveForward: [1],
   moveNodeByKey: ['', '', 0],
-  // moveNodeByPath: [],
+  // moveNodeByPath: [List<number>([0, 0]), List<number>([0, 0]), 0],
   moveStartBackward: [1],
-  moveStartTo: ['', 0],
+  moveStartTo: [node.key, 0],
   moveStartToEndOfBlock: [],
+  moveStartToEndOfInline: [],
+  moveStartToEndOfNextBlock: [],
+  moveStartToEndOfNextInline: [],
+  moveStartToEndOfNextText: [],
+  moveStartToEndOfNode: [node],
+  moveStartToEndOfPreviousBlock: [],
+  moveStartToEndOfPreviousInline: [],
+  moveStartToEndOfPreviousText: [],
+  moveStartToEndOfText: [],
+  moveStartToStartOfBlock: [],
+  moveStartToStartOfInline: [],
+  moveStartToStartOfNextBlock: [],
+  moveStartToStartOfNextInline: [],
+  moveStartToStartOfNextText: [],
+  moveStartToStartOfNode: [node],
+  moveStartToStartOfPreviousBlock: [],
+  moveStartToStartOfPreviousInline: [],
+  moveStartToStartOfPreviousText: [],
+  moveStartToStartOfText: [],
+  moveStartWordBackward: [],
+  moveStartWordForward: [],
+  moveTo: [''],
+  moveToAnchor: [],
+  moveToEnd: [],
+  moveToEndOfBlock: [],
+  moveToEndOfInline: [],
+  moveToEndOfNextInline: [],
+  moveToEndOfNextText: [],
+  moveToEndOfNode: [node],
+  moveToEndOfPreviousBlock: [],
+  moveToEndOfPreviousInline: [],
+  moveToEndOfPreviousText: [],
+  moveToEndOfText: [],
+  moveToFocus: [],
+  moveToRangeOfDocument: [],
+  moveToRangeOfNode: [node],
+  moveToStart: [],
+  moveToStartOfInline: [],
+  moveToStartOfNextInline: [],
+  moveToStartOfNextText: [],
+  moveToStartOfNode: [node],
+  moveToStartOfPreviousBlock: [],
+  moveToStartOfPreviousInline: [],
+  moveToStartOfPreviousText: [],
+  moveToStartOfText: [],
+  moveWordBackward: [],
+  moveWordForward: [],
 
   // TODO
-};
+});
 
 function reducer(
   state: Partial<State>,
@@ -131,9 +185,10 @@ function reducer(
 }
 
 export function useMethodState(
-  editor: Editor | null
+  editor: Editor | null,
+  node: Node,
 ) {
-  const [methodState, dispatch] = useReducer(reducer, initialState);
+  const [methodState, dispatch] = useReducer(reducer, initialState(node));
   const [additionalMethodNames, setAdditionalMethodNames] = useState<string[]>([]);
 
   const methodNames = useMemo(

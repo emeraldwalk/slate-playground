@@ -4,18 +4,25 @@ import {
   Value,
 } from 'slate';
 
-export type Node = { isSelected: boolean, nodes?: Node[], _slateNode: SlateNode } & NodeJSON;
+export type Node = {
+  isSelected: boolean,
+  nodes?: Node[],
+  path: number[],
+  _slateNode: SlateNode
+} & NodeJSON;
 
 /**
  * Transform a Slate node tree into a data model.
  */
 export function nodeTree(
   node: SlateNode,
-  selectedKeys: string[]
+  selectedKeys: string[],
+  path: number[],
 ): Node {
   if (node.object === 'text') {
     return {
       key: node.key,
+      path,
       isSelected: selectedKeys.indexOf(node.key) > -1,
       object: node.object,
       _slateNode: node,
@@ -23,11 +30,12 @@ export function nodeTree(
   }
 
   const childNodes = node.nodes.toArray().map(
-    child => nodeTree(child, selectedKeys),
+    (child, i) => nodeTree(child, selectedKeys, [...path, i]),
   );
 
   return {
     key: node.key,
+    path,
     ...node.toJSON() as any,
     isSelected: childNodes.every(childNodes => childNodes.isSelected),
     nodes: childNodes,
