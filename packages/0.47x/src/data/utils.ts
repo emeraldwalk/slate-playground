@@ -25,6 +25,7 @@ export function nodeTree(
       path,
       isSelected: selectedKeys.indexOf(node.key) > -1,
       object: node.object,
+      text: node.text,
       _slateNode: node,
     };
   }

@@ -18,7 +18,7 @@ body {
   height: 100vh;
   margin: 0 auto;
   overflow-y: hidden;
-  width: 800px;
+  // width: 800px;
 }
 
 .c_additional-methods {
@@ -43,7 +43,7 @@ body {
 .c_controls {
   display: flex;
   flex-direction: column;
-  flex-basis: 300px;
+  overflow: hidden;
 }
 
 .c_editor {
@@ -77,6 +77,12 @@ body {
   flex-grow: 1;
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .row {
   display: flex;
   &:last-of-type {
@@ -86,6 +92,16 @@ body {
 
 .scroll {
   overflow-y: scroll;
+}
+
+.sidebar {
+  display: flex;
+  flex-basis: 350px;
+  flex-direction: column;
+  border-left: 1px solid #ccc;
+  margin-left: 1rem;
+  padding-left: .5rem;
+  overflow-y: hidden;
 }
 
 button {

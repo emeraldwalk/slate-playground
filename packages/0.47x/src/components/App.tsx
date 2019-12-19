@@ -23,10 +23,10 @@ function stringifyArgs(args: unknown[]) {
   return args.map(
     a =>
       typeof a === 'string' ? `'${a}'`
-      : typeof a === 'number' ? a
-      : a instanceof List ? `List([${(a as any).toArray()}])`
-      : typeof a === 'object' ? '[selected node]'
-      : String(a)
+        : typeof a === 'number' ? a
+          : a instanceof List ? `List([${(a as any).toArray()}])`
+            : typeof a === 'object' ? '[selected node]'
+              : String(a)
   ).join(', ');
 }
 
@@ -45,7 +45,7 @@ const App: React.FC = () => {
     methodNames,
     methodState,
     pendingMethodState,
-  } = useMethodState(editorRef.current, selectedNodes[0]);
+  } = useMethodState(editorRef.current, selectedNodes[0] || value.document.getFirstText());
 
   const filteredAdditionalMethodNames = useFilter(
     additionalMethodNames,
@@ -70,113 +70,119 @@ const App: React.FC = () => {
 
   return (
     <div className="c_app">
-      <h1>SlateJS (0.47x) Playground</h1>
-
       <div className="row">
-        <Editor
-          className="c_editor"
-          onChange={({ value }: OnChangeParam) => {
-            setValue(value);
-          }}
-          ref={editorRef}
-          value={value}
-        />
-        <button onClick={() => {
-          setValue(initialValue);
-        }}>Reset</button>
-      </div>
+        <div className="main">
+          <h1>SlateJS (0.47x) Playground</h1>
 
-      <div className="row">
-        <Selection
-          selection={value.selection}
-        />
+          <div className="row">
+            <Editor
+              className="c_editor"
+              onChange={({ value }: OnChangeParam) => {
+                setValue(value);
+              }}
+              ref={editorRef}
+              value={value}
+            />
+            <button onClick={() => {
+              setValue(initialValue);
+            }}>Reset</button>
+          </div>
 
-        <Document
-          onSelect={onSelect}
-          node={documentNode}
-        />
+          <div className="row">
+            <Selection
+              selection={value.selection}
+            />
 
-        <div className="c_controls">
-          <h2>Editor Methods</h2>
-          <input
-            className="c_filter"
-            onChange={({ currentTarget }) => setFilterBy(currentTarget.value)}
-            placeholder="Filter..."
-            value={filterBy}
-          />
-          <div className="scroll">
-            {
-              filteredMethodNames.map(key => {
-                const pendingArgs = pendingMethodState[key]!;
-                const currentArgs = methodState[key]!;
+            <Document
+              onSelect={onSelect}
+              node={documentNode}
+            />
+          </div>
+        </div>
 
-                return (
-                  <div className="c_control" key={key}>
-                    {
-                      (pendingArgs as unknown[]).map((pendingArg, i) => {
-                        if (pendingArg instanceof List) {
-                          pendingArg = (pendingArg as any).toArray().join(',');
-                        }
+        <div className="sidebar">
+          <div className="c_controls">
+            <h2>Editor Methods</h2>
+            <input
+              className="c_filter"
+              onChange={({ currentTarget }) => setFilterBy(currentTarget.value)}
+              placeholder="Filter..."
+              value={filterBy}
+            />
+            <div className="scroll">
+              {
+                filteredMethodNames.map(key => {
+                  const pendingArgs = pendingMethodState[key]!;
+                  const currentArgs = methodState[key]!;
 
-                        return typeof pendingArg === 'string' || typeof pendingArg === 'number' ? (
-                          <input
-                            key={i}
-                            onBlur={() => {
-                              const payload = pendingArgs.slice();
+                  return (
+                    <div className="c_control" key={key}>
+                      {
+                        (pendingArgs as unknown[]).map((pendingArg, i) => {
+                          if (pendingArg instanceof List) {
+                            pendingArg = (pendingArg as any).toArray().join(',');
+                          }
 
-                              if (typeof currentArgs[i] === 'number' && isNaN(payload[i])) {
-                                payload[i] = currentArgs[i];
-                              }
-                              else if (currentArgs[i] instanceof List) {
-                                const values = String(pendingArgs[i]).split(',').map(v => Number(v.trim()));
-                                if (values.some(isNaN)) {
+                          return typeof pendingArg === 'string' || typeof pendingArg === 'number' ? (
+                            <input
+                              key={i}
+                              onBlur={() => {
+                                const payload = pendingArgs.slice();
+
+                                if (typeof currentArgs[i] === 'number' && isNaN(payload[i])) {
                                   payload[i] = currentArgs[i];
                                 }
-                                else {
-                                  payload[i] = List(values);
+                                else if (currentArgs[i] instanceof List) {
+                                  const values = String(pendingArgs[i]).split(',').map(v => Number(v.trim()));
+                                  if (values.some(isNaN)) {
+                                    payload[i] = currentArgs[i];
+                                  }
+                                  else {
+                                    payload[i] = List(values);
+                                  }
                                 }
-                              }
 
-                              const action = {
-                                type: key,
-                                payload,
-                              } as Action;
+                                const action = {
+                                  type: key,
+                                  payload,
+                                } as Action;
 
-                              dispatchPending(action);
-                              dispatch(action);
-                            }}
-                            onChange={({ currentTarget }) => {
-                              const payload = pendingArgs.slice();
-                              payload[i] = currentTarget.value;
+                                dispatchPending(action);
+                                dispatch(action);
+                              }}
+                              onChange={({ currentTarget }) => {
+                                const payload = pendingArgs.slice();
+                                payload[i] = currentTarget.value;
 
-                              const action = {
-                                type: key,
-                                payload,
-                              } as Action;
+                                const action = {
+                                  type: key,
+                                  payload,
+                                } as Action;
 
-                              dispatchPending(action);
-                            }}
-                            value={pendingArg}
-                          />
-                        ) : null
-                      })
-                    }
-                    <button
-                      onClick={onClick(editorRef.current!, key as keyof State, ...pendingArgs)}
-                    >{key}({stringifyArgs(currentArgs)})
+                                dispatchPending(action);
+                              }}
+                              value={pendingArg}
+                            />
+                          ) : null
+                        })
+                      }
+                      <button
+                        onClick={onClick(editorRef.current!, key as keyof State, ...pendingArgs)}
+                      >{key}({stringifyArgs(currentArgs)})
                   </button>
-                  </div>
-                )
-              })
-            }
-
-            <h2>TODO: Additional Methods</h2>
-            <ul className="c_additional-methods">
-              {
-                filteredAdditionalMethodNames
-                  .map(method => <li key={method}>{method}</li>)
+                    </div>
+                  )
+                })
               }
-            </ul>
+
+              <h2>TODO: Additional Methods</h2>
+              <ul className="c_additional-methods">
+                {
+                  filteredAdditionalMethodNames
+                    .map(method => <li key={method}>{method}</li>)
+                }
+              </ul>
+            </div>
           </div>
         </div>
       </div>
