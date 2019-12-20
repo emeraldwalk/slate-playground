@@ -61,7 +61,6 @@ const App: React.FC = () => {
   const onSelect = useCallback((node: SlateNode) => {
     editorRef.current!.moveAnchorToStartOfNode(node);
     editorRef.current!.moveFocusToEndOfNode(node);
-
     editorRef.current!.focus();
   }, []);
 
@@ -93,8 +92,8 @@ const App: React.FC = () => {
             <div className="c_summary">
               <h2>Summary</h2>
               {
-                nodeSummary(value.document).map(nodeStr => (
-                  <pre>{nodeStr}</pre>
+                nodeSummary(value.document).map((nodeStr, i) => (
+                  <pre key={`${i}_${nodeStr}`}>{nodeStr}</pre>
                 ))
               }
             </div>
