@@ -27,7 +27,7 @@ export function nodeSummary(
     }
 
     if (node.object === 'block' || node.object === 'inline') {
-      return `${prefix}block:${node.type}`;
+      return `${prefix}${node.object}:${node.type}`;
     }
 
     if (node.object === 'text') {

@@ -91,7 +91,7 @@ const App: React.FC = () => {
 
           <div className="data row">
             <div className="c_summary">
-              <h2>Node Summary</h2>
+              <h2>Summary</h2>
               {
                 nodeSummary(value.document).map(nodeStr => (
                   <pre>{nodeStr}</pre>
@@ -99,13 +99,13 @@ const App: React.FC = () => {
               }
             </div>
 
-            <Selection
-              selection={value.selection}
-            />
-
             <Document
               onSelect={onSelect}
               node={documentNode}
+            />
+
+            <Selection
+              selection={value.selection}
             />
           </div>
         </div>
