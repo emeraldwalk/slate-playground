@@ -18,7 +18,9 @@ body {
   height: 100vh;
   margin: 0 auto;
   overflow-y: hidden;
-  // width: 800px;
+  > * {
+    overflow-y: hidden;
+  }
 }
 
 .c_additional-methods {
@@ -77,6 +79,21 @@ body {
   flex-grow: 1;
 }
 
+.data {
+  overflow-y: hidden;
+}
+
+.footer {
+  background: #777;
+  color: #fff;
+  display: inline-block;
+  font-size: .8rem;
+  padding: 4px;
+  position: absolute;
+  right: 0;
+  top: calc(100vh - 1.5rem);
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -85,9 +102,9 @@ body {
 
 .row {
   display: flex;
-  &:last-of-type {
-    overflow-y: hidden;
-  }
+  // &:last-of-type {
+  //   overflow-y: hidden;
+  // }
 }
 
 .scroll {

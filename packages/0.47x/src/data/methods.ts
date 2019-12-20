@@ -21,6 +21,7 @@ export type State = {
 const initialState = (
   node: Node,
 ): Partial<State> => ({
+  insertBlock: ['div'],
   insertInline: ['span'],
   insertText: [''],
   moveAnchorBackward: [1],

@@ -72,7 +72,7 @@ const App: React.FC = () => {
     <div className="c_app">
       <div className="row">
         <div className="main">
-          <h1>SlateJS (0.47x) Playground</h1>
+          <h1>SlateJS Playground</h1>
 
           <div className="row">
             <Editor
@@ -88,7 +88,7 @@ const App: React.FC = () => {
             }}>Reset</button>
           </div>
 
-          <div className="row">
+          <div className="data row">
             <Selection
               selection={value.selection}
             />
@@ -121,6 +121,11 @@ const App: React.FC = () => {
                         (pendingArgs as unknown[]).map((pendingArg, i) => {
                           if (pendingArg instanceof List) {
                             pendingArg = (pendingArg as any).toArray().join(',');
+                          }
+
+                          let title = typeof currentArgs[i] as string;
+                          if (title === 'object' && currentArgs[i] instanceof List) {
+                            title = 'List';
                           }
 
                           return typeof pendingArg === 'string' || typeof pendingArg === 'number' ? (
@@ -161,6 +166,7 @@ const App: React.FC = () => {
 
                                 dispatchPending(action);
                               }}
+                              title={title}
                               value={pendingArg}
                             />
                           ) : null
@@ -186,6 +192,9 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
+      <footer className="footer">
+        <span>slate v0.47.9 slate-react v0.22.10</span>
+      </footer>
     </div>
   );
 }
