@@ -21,9 +21,11 @@ export type State = {
 const initialState = (
   node: Node,
 ): Partial<State> => ({
+  undo: [],
+
   insertBlock: ['div'],
   insertInline: ['span'],
-  insertText: [''],
+  insertText: ['hello'],
   moveAnchorBackward: [1],
   moveAnchorForward: [1],
   moveAnchorTo: [''],
@@ -168,7 +170,6 @@ const initialState = (
   moveWordBackward: [],
   moveWordForward: [],
   splitBlock: [1],
-  undo: [],
 });
 
 function reducer(

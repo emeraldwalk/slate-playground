@@ -11,6 +11,51 @@ export type Node = {
   _slateNode: SlateNode
 } & NodeJSON;
 
+export function nodeSummary(
+  node: SlateNode,
+): string[] {
+  const result: string[] = [];
+
+  function asText(level: number, node: SlateNode): string {
+    let prefix = '';
+    for (let i = 0; i < level; ++i) {
+      prefix += '  ';
+    }
+
+    if (node.object === 'document') {
+      return `${prefix}document`;
+    }
+
+    if (node.object === 'block' || node.object === 'inline') {
+      return `${prefix}block:${node.type}`;
+    }
+
+    if (node.object === 'text') {
+      return `${prefix}text:'${node.text}'`;
+    }
+
+    throw Error('Invalid node');
+  }
+
+  const stack: [number, SlateNode][] = [[0, node]];
+
+  while (stack.length > 0) {
+    const [level, node] = stack.shift()!;
+
+    result.push(asText(level, node));
+
+    if (node.object === 'text') {
+      continue;
+    }
+
+    stack.unshift(
+      ...node.nodes.toArray().map(node => [level + 1, node] as [number, SlateNode]),
+    );
+  }
+
+  return result;
+}
+
 /**
  * Transform a Slate node tree into a data model.
  */

@@ -7,6 +7,7 @@ import { useFilter } from '../data/filter';
 import { Action, useMethodState, State } from '../data/methods';
 import { useDocument } from '../data/node';
 import { useValue } from '../data/value';
+import { nodeSummary } from '../data/utils';
 
 function onClick<M extends keyof State>(
   editor: Editor | null,
@@ -89,6 +90,15 @@ const App: React.FC = () => {
           </div>
 
           <div className="data row">
+            <div className="c_summary">
+              <h2>Node Summary</h2>
+              {
+                nodeSummary(value.document).map(nodeStr => (
+                  <pre>{nodeStr}</pre>
+                ))
+              }
+            </div>
+
             <Selection
               selection={value.selection}
             />
