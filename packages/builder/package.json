@@ -1,0 +1,14 @@
+{
+  "name": "@slate-playground/builder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "slate": "^0.57.1",
+    "slate-react": "^0.57.1",
+    "typescript": "^3.7.4"
+  },
+  "scripts": {
+    "build": "node lib/index.js ../0.5x/node_modules/slate/dist/interfaces/editor.d.ts > ../0.5x/src/data/editor.json"
+  }
+}

@@ -6,9 +6,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build:meta": "yarn workspace @slate-playground/builder tsc -p . && yarn workspace @slate-playground/builder build",
     "build": "yarn workspace @slate-playground/0.47x build",
     "deploy": "rm -rf docs && yarn build && mv packages/0.47x/build docs",
-    "start": "yarn workspace @slate-playground/0.47x start"
+    "start": "yarn workspace @slate-playground/0.47x start",
+    "start2": "yarn workspace @slate-playground/0.5x start"
   },
   "workspaces": [
     "packages/*"

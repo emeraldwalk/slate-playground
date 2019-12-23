@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "outDir": "lib",
+    "sourceMap": true,
+  },
+  "include": [
+    "src"
+  ]
+}
