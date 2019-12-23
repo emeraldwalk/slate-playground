@@ -1,0 +1,17 @@
+$color-border: #ccc;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.c_editor {
+  border: 1px solid $color-border;
+  padding: 4px;
+}
