@@ -15,3 +15,35 @@ body {
   border: 1px solid $color-border;
   padding: 4px;
 }
+
+.c_method {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  button {
+    height: 40px;
+    margin: 1rem .2rem;
+    width: 100px;
+  }
+}
+
+.c_method__arg {
+  display: flex;
+  flex-basis: 50%;
+  flex-direction: row;
+  padding-left: 1rem;
+
+  &-label {
+    width: 100px;
+  }
+
+  &:nth-last-child(n+3) {
+    .c_method__arg-label:after {
+      content: ','
+    }
+  }
+}
+
+.c_method__arg-input {
+  width: 200px;
+}
