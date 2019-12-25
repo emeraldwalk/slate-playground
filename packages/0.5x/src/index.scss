@@ -50,3 +50,13 @@ body {
     background: #eee;
   }
 }
+
+.c_tools {
+  display: flex;
+  flex-direction: row;
+}
+
+.c_value {
+  font-size: .8rem;
+  padding: 10px;
+}
