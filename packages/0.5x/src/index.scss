@@ -11,9 +11,25 @@ body {
   font-size: 16px;
 }
 
+.c_app,
+.c_tools {
+  overflow-y: hidden;
+}
+
+.c_app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .c_editor {
   border: 1px solid $color-border;
   padding: 4px;
+}
+
+.c_methods {
+  display: flex;
+  flex-direction: column;
 }
 
 .c_method {
@@ -34,7 +50,7 @@ body {
   padding-left: 1rem;
 
   &-label {
-    width: 100px;
+    width: 200px;
   }
 
   &:nth-last-child(n+3) {
@@ -44,11 +60,21 @@ body {
   }
 }
 
+.c_method-filter {
+  padding: 4px;
+  width: 100%;
+}
+
 .c_method__arg-input {
   width: 200px;
   &:read-only {
     background: #eee;
   }
+}
+
+.c_result {
+  flex-grow: 1;
+  padding: 0 10px;
 }
 
 .c_tools {
@@ -57,6 +83,13 @@ body {
 }
 
 .c_value {
-  font-size: .8rem;
-  padding: 10px;
+  flex-grow: 1;
+  padding: 0 10px;
+  pre {
+    font-size: .8rem;
+  }
+}
+
+.scroll {
+  overflow-y: scroll;
 }

@@ -168,11 +168,11 @@ export function createSerializeSignature(
   return function serializeSignature(
     signature: ts.Signature
   ) {
-    const x = signature.getReturnType()
     return {
       args: signature.parameters.map(serializeSymbol),
+      documentation: ts.displayPartsToString(signature.getDocumentationComment(checker)),
       returnType: checker.typeToString(signature.getReturnType()),
-      documentation: ts.displayPartsToString(signature.getDocumentationComment(checker))
+      typeParameters: signature.typeParameters && signature.typeParameters.map(t => t.symbol.name)
     }
   }
 }

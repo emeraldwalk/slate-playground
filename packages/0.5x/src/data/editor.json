@@ -17,8 +17,11 @@
           "type": "{ at?: Range | Path | Point; match?: ((node: Node) => boolean) | ((node: Node) => node is T); mode?: \"highest\" | \"lowest\"; voids?: boolean; }"
         }
       ],
+      "documentation": "Get the ancestor above a location in the document.",
       "returnType": "NodeEntry<T>",
-      "documentation": "Get the ancestor above a location in the document."
+      "typeParameters": [
+        "T"
+      ]
     },
     {
       "name": "addMark",
@@ -42,8 +45,8 @@
           "type": "any"
         }
       ],
-      "returnType": "void",
-      "documentation": "Add a custom property to the leaf text nodes in the current selection.\r\n\r\nIf the selection is currently collapsed, the marks will be added to the\r\n`editor.marks` property instead, and applied when text is inserted next."
+      "documentation": "Add a custom property to the leaf text nodes in the current selection.\r\n\r\nIf the selection is currently collapsed, the marks will be added to the\r\n`editor.marks` property instead, and applied when text is inserted next.",
+      "returnType": "void"
     },
     {
       "name": "after",
@@ -67,8 +70,8 @@
           "type": "{ distance?: number; unit?: \"character\" | \"word\" | \"line\" | \"block\" | \"offset\"; }"
         }
       ],
-      "returnType": "Point",
-      "documentation": "Get the point after a location."
+      "documentation": "Get the point after a location.",
+      "returnType": "Point"
     },
     {
       "name": "before",
@@ -92,8 +95,8 @@
           "type": "{ distance?: number; unit?: \"character\" | \"word\" | \"line\" | \"block\" | \"offset\"; }"
         }
       ],
-      "returnType": "Point",
-      "documentation": "Get the point before a location."
+      "documentation": "Get the point before a location.",
+      "returnType": "Point"
     },
     {
       "name": "deleteBackward",
@@ -111,8 +114,8 @@
           "type": "{ unit?: \"character\" | \"word\" | \"line\" | \"block\"; }"
         }
       ],
-      "returnType": "void",
-      "documentation": "Delete content in the editor backward from the current selection."
+      "documentation": "Delete content in the editor backward from the current selection.",
+      "returnType": "void"
     },
     {
       "name": "deleteForward",
@@ -130,8 +133,8 @@
           "type": "{ unit?: \"character\" | \"word\" | \"line\" | \"block\"; }"
         }
       ],
-      "returnType": "void",
-      "documentation": "Delete content in the editor forward from the current selection."
+      "documentation": "Delete content in the editor forward from the current selection.",
+      "returnType": "void"
     },
     {
       "name": "deleteFragment",
@@ -143,8 +146,8 @@
           "type": "Editor"
         }
       ],
-      "returnType": "void",
-      "documentation": "Delete the content in the current selection."
+      "documentation": "Delete the content in the current selection.",
+      "returnType": "void"
     },
     {
       "name": "edges",
@@ -162,8 +165,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "[Point, Point]",
-      "documentation": "Get the start and end points of a location."
+      "documentation": "Get the start and end points of a location.",
+      "returnType": "[Point, Point]"
     },
     {
       "name": "end",
@@ -181,8 +184,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "Point",
-      "documentation": "Get the end point of a location."
+      "documentation": "Get the end point of a location.",
+      "returnType": "Point"
     },
     {
       "name": "first",
@@ -200,8 +203,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "NodeEntry<Node>",
-      "documentation": "Get the first node at a location."
+      "documentation": "Get the first node at a location.",
+      "returnType": "NodeEntry<Node>"
     },
     {
       "name": "fragment",
@@ -219,8 +222,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "Descendant[]",
-      "documentation": "Get the fragment at a location."
+      "documentation": "Get the fragment at a location.",
+      "returnType": "Descendant[]"
     },
     {
       "name": "hasBlocks",
@@ -238,8 +241,8 @@
           "type": "Element"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a node has block children."
+      "documentation": "Check if a node has block children.",
+      "returnType": "boolean"
     },
     {
       "name": "hasInlines",
@@ -257,8 +260,8 @@
           "type": "Element"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a node has inline and text children."
+      "documentation": "Check if a node has inline and text children.",
+      "returnType": "boolean"
     },
     {
       "name": "hasTexts",
@@ -276,8 +279,8 @@
           "type": "Element"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a node has text children."
+      "documentation": "Check if a node has text children.",
+      "returnType": "boolean"
     },
     {
       "name": "insertBreak",
@@ -289,8 +292,8 @@
           "type": "Editor"
         }
       ],
-      "returnType": "void",
-      "documentation": "Insert a block break at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first."
+      "documentation": "Insert a block break at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first.",
+      "returnType": "void"
     },
     {
       "name": "insertFragment",
@@ -308,8 +311,8 @@
           "type": "Node[]"
         }
       ],
-      "returnType": "void",
-      "documentation": "Insert a fragment at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first."
+      "documentation": "Insert a fragment at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first.",
+      "returnType": "void"
     },
     {
       "name": "insertNode",
@@ -327,8 +330,8 @@
           "type": "Node"
         }
       ],
-      "returnType": "void",
-      "documentation": "Insert a node at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first."
+      "documentation": "Insert a node at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first.",
+      "returnType": "void"
     },
     {
       "name": "insertText",
@@ -346,8 +349,8 @@
           "type": "string"
         }
       ],
-      "returnType": "void",
-      "documentation": "Insert text at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first."
+      "documentation": "Insert text at the current selection.\r\n\r\nIf the selection is currently expanded, it will be deleted first.",
+      "returnType": "void"
     },
     {
       "name": "isBlock",
@@ -365,8 +368,8 @@
           "type": "any"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a value is a block `Element` object."
+      "documentation": "Check if a value is a block `Element` object.",
+      "returnType": "boolean"
     },
     {
       "name": "isEditor",
@@ -378,8 +381,8 @@
           "type": "any"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a value is an `Editor` object."
+      "documentation": "Check if a value is an `Editor` object.",
+      "returnType": "boolean"
     },
     {
       "name": "isEnd",
@@ -403,8 +406,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a point is the end point of a location."
+      "documentation": "Check if a point is the end point of a location.",
+      "returnType": "boolean"
     },
     {
       "name": "isEdge",
@@ -428,8 +431,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a point is an edge of a location."
+      "documentation": "Check if a point is an edge of a location.",
+      "returnType": "boolean"
     },
     {
       "name": "isEmpty",
@@ -447,8 +450,8 @@
           "type": "Element"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if an element is empty, accounting for void nodes."
+      "documentation": "Check if an element is empty, accounting for void nodes.",
+      "returnType": "boolean"
     },
     {
       "name": "isInline",
@@ -466,8 +469,8 @@
           "type": "any"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a value is an inline `Element` object."
+      "documentation": "Check if a value is an inline `Element` object.",
+      "returnType": "boolean"
     },
     {
       "name": "isNormalizing",
@@ -479,8 +482,8 @@
           "type": "Editor"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if the editor is currently normalizing after each operation."
+      "documentation": "Check if the editor is currently normalizing after each operation.",
+      "returnType": "boolean"
     },
     {
       "name": "isStart",
@@ -504,8 +507,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a point is the start point of a location."
+      "documentation": "Check if a point is the start point of a location.",
+      "returnType": "boolean"
     },
     {
       "name": "isVoid",
@@ -523,8 +526,8 @@
           "type": "any"
         }
       ],
-      "returnType": "boolean",
-      "documentation": "Check if a value is a void `Element` object."
+      "documentation": "Check if a value is a void `Element` object.",
+      "returnType": "boolean"
     },
     {
       "name": "last",
@@ -542,8 +545,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "NodeEntry<Node>",
-      "documentation": "Get the last node at a location."
+      "documentation": "Get the last node at a location.",
+      "returnType": "NodeEntry<Node>"
     },
     {
       "name": "leaf",
@@ -567,8 +570,8 @@
           "type": "{ depth?: number; edge?: \"start\" | \"end\"; }"
         }
       ],
-      "returnType": "NodeEntry<Text>",
-      "documentation": "Get the leaf text node at a location."
+      "documentation": "Get the leaf text node at a location.",
+      "returnType": "NodeEntry<Text>"
     },
     {
       "name": "levels",
@@ -586,8 +589,11 @@
           "type": "{ at?: Range | Path | Point; match?: ((node: Node) => boolean) | ((node: Node) => node is T_1); reverse?: boolean; voids?: boolean; }"
         }
       ],
+      "documentation": "Iterate through all of the levels at a location.",
       "returnType": "Iterable<NodeEntry<T_1>>",
-      "documentation": "Iterate through all of the levels at a location."
+      "typeParameters": [
+        "T_1"
+      ]
     },
     {
       "name": "marks",
@@ -599,8 +605,8 @@
           "type": "Editor"
         }
       ],
-      "returnType": "Record<string, any>",
-      "documentation": "Get the marks that would be added to text at the current selection."
+      "documentation": "Get the marks that would be added to text at the current selection.",
+      "returnType": "Record<string, any>"
     },
     {
       "name": "next",
@@ -618,8 +624,11 @@
           "type": "{ at?: Range | Path | Point; match?: ((node: Node) => boolean) | ((node: Node) => node is T_2); mode?: \"highest\" | \"lowest\" | \"all\"; voids?: boolean; }"
         }
       ],
+      "documentation": "Get the matching node in the branch of the document after a location.",
       "returnType": "NodeEntry<T_2>",
-      "documentation": "Get the matching node in the branch of the document after a location."
+      "typeParameters": [
+        "T_2"
+      ]
     },
     {
       "name": "node",
@@ -643,8 +652,8 @@
           "type": "{ depth?: number; edge?: \"start\" | \"end\"; }"
         }
       ],
-      "returnType": "NodeEntry<Node>",
-      "documentation": "Get the node at a location."
+      "documentation": "Get the node at a location.",
+      "returnType": "NodeEntry<Node>"
     },
     {
       "name": "nodes",
@@ -662,8 +671,11 @@
           "type": "{ at?: Range | Path | Point | Span; match?: ((node: Node) => boolean) | ((node: Node) => node is T_3); mode?: \"highest\" | \"lowest\" | \"all\"; universal?: boolean; reverse?: boolean; voids?: boolean; }"
         }
       ],
+      "documentation": "Iterate through all of the nodes in the Editor.",
       "returnType": "Iterable<NodeEntry<T_3>>",
-      "documentation": "Iterate through all of the nodes in the Editor."
+      "typeParameters": [
+        "T_3"
+      ]
     },
     {
       "name": "normalize",
@@ -681,8 +693,8 @@
           "type": "{ force?: boolean; }"
         }
       ],
-      "returnType": "void",
-      "documentation": "Normalize any dirty objects in the editor."
+      "documentation": "Normalize any dirty objects in the editor.",
+      "returnType": "void"
     },
     {
       "name": "parent",
@@ -706,8 +718,8 @@
           "type": "{ depth?: number; edge?: \"start\" | \"end\"; }"
         }
       ],
-      "returnType": "NodeEntry<Ancestor>",
-      "documentation": "Get the parent node of a location."
+      "documentation": "Get the parent node of a location.",
+      "returnType": "NodeEntry<Ancestor>"
     },
     {
       "name": "path",
@@ -731,8 +743,8 @@
           "type": "{ depth?: number; edge?: \"start\" | \"end\"; }"
         }
       ],
-      "returnType": "Path",
-      "documentation": "Get the path of a location."
+      "documentation": "Get the path of a location.",
+      "returnType": "Path"
     },
     {
       "name": "pathRef",
@@ -756,8 +768,8 @@
           "type": "{ affinity?: \"backward\" | \"forward\"; }"
         }
       ],
-      "returnType": "PathRef",
-      "documentation": "Create a mutable ref for a `Path` object, which will stay in sync as new\r\noperations are applied to the editor."
+      "documentation": "Create a mutable ref for a `Path` object, which will stay in sync as new\r\noperations are applied to the editor.",
+      "returnType": "PathRef"
     },
     {
       "name": "pathRefs",
@@ -769,8 +781,8 @@
           "type": "Editor"
         }
       ],
-      "returnType": "Set<PathRef>",
-      "documentation": "Get the set of currently tracked path refs of the editor."
+      "documentation": "Get the set of currently tracked path refs of the editor.",
+      "returnType": "Set<PathRef>"
     },
     {
       "name": "point",
@@ -794,8 +806,8 @@
           "type": "{ edge?: \"start\" | \"end\"; }"
         }
       ],
-      "returnType": "Point",
-      "documentation": "Get the start or end point of a location."
+      "documentation": "Get the start or end point of a location.",
+      "returnType": "Point"
     },
     {
       "name": "pointRef",
@@ -819,8 +831,8 @@
           "type": "{ affinity?: \"backward\" | \"forward\"; }"
         }
       ],
-      "returnType": "PointRef",
-      "documentation": "Create a mutable ref for a `Point` object, which will stay in sync as new\r\noperations are applied to the editor."
+      "documentation": "Create a mutable ref for a `Point` object, which will stay in sync as new\r\noperations are applied to the editor.",
+      "returnType": "PointRef"
     },
     {
       "name": "pointRefs",
@@ -832,8 +844,8 @@
           "type": "Editor"
         }
       ],
-      "returnType": "Set<PointRef>",
-      "documentation": "Get the set of currently tracked point refs of the editor."
+      "documentation": "Get the set of currently tracked point refs of the editor.",
+      "returnType": "Set<PointRef>"
     },
     {
       "name": "positions",
@@ -851,8 +863,8 @@
           "type": "{ at?: Range | Path | Point; unit?: \"character\" | \"word\" | \"line\" | \"block\" | \"offset\"; reverse?: boolean; }"
         }
       ],
-      "returnType": "Iterable<Point>",
-      "documentation": "Iterate through all of the positions in the document where a `Point` can be\r\nplaced.\r\n\r\nBy default it will move forward by individual offsets at a time,  but you\r\ncan pass the `unit: 'character'` option to moved forward one character, word,\r\nor line at at time.\r\n\r\nNote: void nodes are treated as a single point, and iteration will not\r\nhappen inside their content."
+      "documentation": "Iterate through all of the positions in the document where a `Point` can be\r\nplaced.\r\n\r\nBy default it will move forward by individual offsets at a time,  but you\r\ncan pass the `unit: 'character'` option to moved forward one character, word,\r\nor line at at time.\r\n\r\nNote: void nodes are treated as a single point, and iteration will not\r\nhappen inside their content.",
+      "returnType": "Iterable<Point>"
     },
     {
       "name": "previous",
@@ -870,8 +882,11 @@
           "type": "{ at?: Range | Path | Point; match?: ((node: Node) => boolean) | ((node: Node) => node is T_4); mode?: \"highest\" | \"lowest\" | \"all\"; voids?: boolean; }"
         }
       ],
+      "documentation": "Get the matching node in the branch of the document before a location.",
       "returnType": "NodeEntry<T_4>",
-      "documentation": "Get the matching node in the branch of the document before a location."
+      "typeParameters": [
+        "T_4"
+      ]
     },
     {
       "name": "range",
@@ -895,8 +910,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "Range",
-      "documentation": "Get a range of a location."
+      "documentation": "Get a range of a location.",
+      "returnType": "Range"
     },
     {
       "name": "rangeRef",
@@ -920,8 +935,8 @@
           "type": "{ affinity?: \"backward\" | \"forward\" | \"outward\" | \"inward\"; }"
         }
       ],
-      "returnType": "RangeRef",
-      "documentation": "Create a mutable ref for a `Range` object, which will stay in sync as new\r\noperations are applied to the editor."
+      "documentation": "Create a mutable ref for a `Range` object, which will stay in sync as new\r\noperations are applied to the editor.",
+      "returnType": "RangeRef"
     },
     {
       "name": "rangeRefs",
@@ -933,8 +948,8 @@
           "type": "Editor"
         }
       ],
-      "returnType": "Set<RangeRef>",
-      "documentation": "Get the set of currently tracked range refs of the editor."
+      "documentation": "Get the set of currently tracked range refs of the editor.",
+      "returnType": "Set<RangeRef>"
     },
     {
       "name": "removeMark",
@@ -952,8 +967,8 @@
           "type": "string"
         }
       ],
-      "returnType": "void",
-      "documentation": "Remove a custom property from all of the leaf text nodes in the current\r\nselection.\r\n\r\nIf the selection is currently collapsed, the removal will be stored on\r\n`editor.marks` and applied to the text inserted next."
+      "documentation": "Remove a custom property from all of the leaf text nodes in the current\r\nselection.\r\n\r\nIf the selection is currently collapsed, the removal will be stored on\r\n`editor.marks` and applied to the text inserted next.",
+      "returnType": "void"
     },
     {
       "name": "start",
@@ -971,8 +986,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "Point",
-      "documentation": "Get the start point of a location."
+      "documentation": "Get the start point of a location.",
+      "returnType": "Point"
     },
     {
       "name": "string",
@@ -990,8 +1005,8 @@
           "type": "Range | Path | Point"
         }
       ],
-      "returnType": "string",
-      "documentation": "Get the text string content of a location.\r\n\r\nNote: the text of void nodes is presumed to be an empty string, regardless\r\nof what their actual content is."
+      "documentation": "Get the text string content of a location.\r\n\r\nNote: the text of void nodes is presumed to be an empty string, regardless\r\nof what their actual content is.",
+      "returnType": "string"
     },
     {
       "name": "transform",
@@ -1009,8 +1024,8 @@
           "type": "Operation"
         }
       ],
-      "returnType": "void",
-      "documentation": "Transform the editor by an operation."
+      "documentation": "Transform the editor by an operation.",
+      "returnType": "void"
     },
     {
       "name": "unhangRange",
@@ -1034,8 +1049,8 @@
           "type": "{ voids?: boolean; }"
         }
       ],
-      "returnType": "Range",
-      "documentation": "Convert a range into a non-hanging one."
+      "documentation": "Convert a range into a non-hanging one.",
+      "returnType": "Range"
     },
     {
       "name": "void",
@@ -1053,8 +1068,8 @@
           "type": "{ at?: Range | Path | Point; mode?: \"highest\" | \"lowest\"; voids?: boolean; }"
         }
       ],
-      "returnType": "NodeEntry<Element>",
-      "documentation": "Match a void node in the current branch of the editor."
+      "documentation": "Match a void node in the current branch of the editor.",
+      "returnType": "NodeEntry<Element>"
     },
     {
       "name": "withoutNormalizing",
@@ -1072,8 +1087,8 @@
           "type": "() => void"
         }
       ],
-      "returnType": "void",
-      "documentation": "Call a function, deferring normalization until after it completes."
+      "documentation": "Call a function, deferring normalization until after it completes.",
+      "returnType": "void"
     }
   ]
 }

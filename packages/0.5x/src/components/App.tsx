@@ -68,6 +68,20 @@ function isArgValid(
   return (arg.isOptional && value === '') || parsed
 }
 
+function resultAsString(
+  result: any
+) {
+  if (typeof result === 'undefined') {
+    return 'undefined'
+  }
+
+  if (typeof result === 'object') {
+    return JSON.stringify(result, undefined, 2)
+  }
+
+  return String(result)
+}
+
 function runCommand(
   name: string,
   editor: Editor,
@@ -83,6 +97,8 @@ const App: React.FC = () => {
     []
   )
 
+  const [filterBy, setFilterBy] = useState('')
+  const [lastResult, setLastResult] = useState('')
   const [value, setValue] = useState<Node[]>(initialValue)
   const [methodState, setMethodState] = useState(() =>
     methods.reduce(
@@ -97,8 +113,11 @@ const App: React.FC = () => {
     )
   )
 
+  const filterByLower = filterBy.toLowerCase()
+
   return (
     <div className="c_app">
+      <h1>SlateJS Playground</h1>
       <Slate
         editor={editor}
         onChange={setValue}
@@ -106,70 +125,95 @@ const App: React.FC = () => {
       >
         <Editable
           className="c_editor"
-          onKeyDown={console.log}
         />
       </Slate>
 
       <div className="c_tools">
         <div className="c_methods">
-          {
-            methods.map(({ args, name }) => (
-              <div className="c_method" key={name}>
-                <label className="c_method__label">
-                  <span>Editor.{name}(</span>
-                  {
-                    args.map(
-                      (arg, i) => (
-                        <div
-                          className="c_method__arg"
-                          key={arg.name}
-                          title={`${arg.name}: ${arg.type}`}
-                        >
-                          <span
-                            className="c_method__arg-label"
-                          >{arg.name}{arg.isOptional ? '?' : ''}</span>
+          <h2>Methods</h2>
+          <input
+            className="c_method-filter"
+            onChange={({ currentTarget }) => {
+              setFilterBy(currentTarget.value)
+            }}
+            placeholder="Filter static Editor methods..."
+            value={filterBy}
+          />
+          <div className="scroll">
+            {
+              methods
+                .filter(
+                  ({ name }) => name.toLowerCase().indexOf(filterByLower) > -1
+                ).map(
+                  ({ args, name, returnType, typeParameters }) => (
+                    <div className="c_method" key={name}>
+                      <label className="c_method__label">
+                        <span>Editor.{name}{typeParameters ? `<${typeParameters.join(', ')}>` : ''}(</span>
+                        {
+                          args.map(
+                            (arg, i) => (
+                              <div
+                                className="c_method__arg"
+                                key={arg.name}
+                                title={`${arg.name}: ${arg.type}`}
+                              >
+                                <span
+                                  className="c_method__arg-label"
+                                >{arg.name}{arg.isOptional ? '?' : ''}</span>
 
-                          <input
-                            className="c_method__arg-input"
-                            onChange={({ currentTarget }) => {
-                              setMethodState({
-                                ...methodState,
-                                [name]: {
-                                  ...methodState[name],
-                                  [arg.name]: currentTarget.value,
-                                },
-                              })
-                            }}
-                            placeholder={arg.type}
-                            readOnly={i === 0}
-                            value={methodState[name][arg.name]}
-                          />
-                        </div>
-                      )
-                    )
-                  }
-                  <span>)</span>
-                </label>
+                                <input
+                                  className="c_method__arg-input"
+                                  disabled={i === 0}
+                                  onChange={({ currentTarget }) => {
+                                    setMethodState({
+                                      ...methodState,
+                                      [name]: {
+                                        ...methodState[name],
+                                        [arg.name]: currentTarget.value,
+                                      },
+                                    })
+                                  }}
+                                  placeholder={i === 0 ? '[Editor Instance]' : arg.type}
+                                  readOnly={i === 0}
+                                  value={methodState[name][arg.name]}
+                                />
+                              </div>
+                            )
+                          )
+                        }
+                        <span>): {returnType}</span>
+                      </label>
 
-                <button
-                  disabled={args.slice(1).some(a => !isArgValid(a, methodState[name][a.name]))}
-                  onClick={() => {
-                    const result = runCommand(
-                      name,
-                      editor,
-                      ...args.slice(1).map(
-                        a => buildArg(
-                          a,
-                          methodState[name][a.name]
-                        )
-                      )
-                    )
-                    console.log('result:', JSON.stringify(result, undefined, 2))
-                  }}
-                >Go</button>
-              </div>
-            ))
-          }
+                      <button
+                        disabled={args.slice(1).some(a => !isArgValid(a, methodState[name][a.name]))}
+                        onClick={() => {
+                          const result = runCommand(
+                            name,
+                            editor,
+                            ...args.slice(1).map(
+                              a => buildArg(
+                                a,
+                                methodState[name][a.name]
+                              )
+                            )
+                          )
+                          setLastResult(result)
+                          console.log('result:', JSON.stringify(result, undefined, 2))
+                        }}
+                      >Go</button>
+                    </div>
+                  ))
+            }
+          </div>
+        </div>
+
+        <div className="c_result">
+          <h2>Result</h2>
+          <pre>
+            {
+              resultAsString(lastResult)
+            }
+          </pre>
         </div>
 
         <div className="c_value">
