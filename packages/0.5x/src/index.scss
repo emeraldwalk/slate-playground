@@ -83,10 +83,17 @@ body {
 }
 
 .c_value {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   padding: 0 10px;
-  pre {
-    font-size: .8rem;
+  button {
+    padding: 10px;
+  }
+  textarea {
+    border: 1px solid $color-border;
+    flex-grow: 1;
+    padding: 10px;
   }
 }
 

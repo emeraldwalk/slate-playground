@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { createEditor, Editor, Node } from 'slate'
 import { Editable, Slate, withReact } from 'slate-react'
 
 import { methods } from '../data/editor.json'
 
-const initialValue = [
+const initialValue: Node[] = [
   {
     type: 'div',
     children: [
@@ -98,8 +98,9 @@ const App: React.FC = () => {
   )
 
   const [filterBy, setFilterBy] = useState('')
-  const [lastResult, setLastResult] = useState('')
-  const [value, setValue] = useState<Node[]>(initialValue)
+  const [lastResult, setLastResult] = useState('None')
+  const [pendingValue, setPendingValue] = useState()
+  const [value, setValue] = useState(initialValue)
   const [methodState, setMethodState] = useState(() =>
     methods.reduce(
       (memo, method) => {
@@ -111,6 +112,15 @@ const App: React.FC = () => {
       },
       {} as Record<string, Record<string, string>>
     )
+  )
+
+  useEffect(
+    () => {
+      setPendingValue(
+        JSON.stringify(value, undefined, 2)
+      )
+    },
+    [value]
   )
 
   const filterByLower = filterBy.toLowerCase()
@@ -218,9 +228,18 @@ const App: React.FC = () => {
 
         <div className="c_value">
           <h2>Value</h2>
-          <pre>
-            {JSON.stringify(value, undefined, 2)}
-          </pre>
+          <textarea
+            onChange={({ currentTarget }) => {
+              setPendingValue(currentTarget.value)
+            }}
+            value={pendingValue}
+          />
+          <button onClick={() => {
+            try {
+              setValue(JSON.parse(pendingValue))
+            }
+            catch(e) {}
+          }}>Update</button>
         </div>
       </div>
     </div>
