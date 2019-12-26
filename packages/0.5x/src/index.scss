@@ -80,12 +80,13 @@ body {
 .c_tools {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .c_value {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex-basis: 250px;
   padding: 0 10px;
   button {
     padding: 10px;

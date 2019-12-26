@@ -139,8 +139,24 @@ const App: React.FC = () => {
       </Slate>
 
       <div className="c_tools">
+        <div className="c_value">
+          <h2>Value</h2>
+          <textarea
+            onChange={({ currentTarget }) => {
+              setPendingValue(currentTarget.value)
+            }}
+            value={pendingValue}
+          />
+          <button onClick={() => {
+            try {
+              setValue(JSON.parse(pendingValue))
+            }
+            catch(e) {}
+          }}>Update</button>
+        </div>
+
         <div className="c_methods">
-          <h2>Methods</h2>
+          <h2>Editor Commands</h2>
           <input
             className="c_method-filter"
             onChange={({ currentTarget }) => {
@@ -224,22 +240,6 @@ const App: React.FC = () => {
               resultAsString(lastResult)
             }
           </pre>
-        </div>
-
-        <div className="c_value">
-          <h2>Value</h2>
-          <textarea
-            onChange={({ currentTarget }) => {
-              setPendingValue(currentTarget.value)
-            }}
-            value={pendingValue}
-          />
-          <button onClick={() => {
-            try {
-              setValue(JSON.parse(pendingValue))
-            }
-            catch(e) {}
-          }}>Update</button>
         </div>
       </div>
     </div>
