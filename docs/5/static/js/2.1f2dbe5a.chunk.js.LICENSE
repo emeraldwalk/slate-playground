@@ -13,8 +13,6 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
-/*! https://mths.be/esrever v0.2.0 by @mathias */
-
 /*!
  * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
  *
@@ -28,6 +26,8 @@ and limitations under the License.
  * Copyright (c) 2014-2017, Jon Schlinkert.
  * Released under the MIT License.
  */
+
+/*! https://mths.be/esrever v0.2.0 by @mathias */
 
 /*
 object-assign
