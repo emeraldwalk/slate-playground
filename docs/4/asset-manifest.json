@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/slate-playground/4/static/css/main.75fa1354.chunk.css",
+    "main.js": "/slate-playground/4/static/js/main.cf246aad.chunk.js",
+    "main.js.map": "/slate-playground/4/static/js/main.cf246aad.chunk.js.map",
+    "runtime-main.js": "/slate-playground/4/static/js/runtime-main.d3c94d28.js",
+    "runtime-main.js.map": "/slate-playground/4/static/js/runtime-main.d3c94d28.js.map",
+    "static/css/2.9b9c52a6.chunk.css": "/slate-playground/4/static/css/2.9b9c52a6.chunk.css",
+    "static/js/2.2d0b6cf8.chunk.js": "/slate-playground/4/static/js/2.2d0b6cf8.chunk.js",
+    "static/js/2.2d0b6cf8.chunk.js.map": "/slate-playground/4/static/js/2.2d0b6cf8.chunk.js.map",
+    "index.html": "/slate-playground/4/index.html",
+    "precache-manifest.68bef647519712f0b1ff1d3a62b1822c.js": "/slate-playground/4/precache-manifest.68bef647519712f0b1ff1d3a62b1822c.js",
+    "service-worker.js": "/slate-playground/4/service-worker.js",
+    "static/css/2.9b9c52a6.chunk.css.map": "/slate-playground/4/static/css/2.9b9c52a6.chunk.css.map",
+    "static/css/main.75fa1354.chunk.css.map": "/slate-playground/4/static/css/main.75fa1354.chunk.css.map",
+    "static/js/2.2d0b6cf8.chunk.js.LICENSE": "/slate-playground/4/static/js/2.2d0b6cf8.chunk.js.LICENSE",
+    "static/media/index.css": "/slate-playground/4/static/media/open-sans-latin-800italic.c62c3eea.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d3c94d28.js",
+    "static/css/2.9b9c52a6.chunk.css",
+    "static/js/2.2d0b6cf8.chunk.js",
+    "static/css/main.75fa1354.chunk.css",
+    "static/js/main.cf246aad.chunk.js"
+  ]
+}
