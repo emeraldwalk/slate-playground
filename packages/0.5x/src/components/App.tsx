@@ -12,7 +12,7 @@ const initialValue: Node[] = [
         type: 'paragraph',
         children: [
           {
-            text: 'Path 000'
+            text: 'Block A1'
           }
         ],
       },
@@ -20,9 +20,25 @@ const initialValue: Node[] = [
         type: 'paragraph',
         children: [
           {
-            text: 'Path 001'
+            text: 'Block A2'
           }
         ],
+      }
+    ]
+  },
+  {
+    type: 'paragraph',
+    children: [
+      {
+        text: 'Block B'
+      }
+    ]
+  },
+  {
+    type: 'paragraph',
+    children: [
+      {
+        text: 'Block C'
       }
     ]
   },
@@ -140,6 +156,15 @@ const App: React.FC = () => {
       >
         <Editable
           className="c_editor"
+          renderElement={({ attributes, children, element }) => {
+            const E = element.type === 'paragraph'
+              ? 'p'
+              : 'div'
+
+            return (
+              <E {...attributes}>{children}</E>
+            )
+          }}
         />
       </Slate>
 
