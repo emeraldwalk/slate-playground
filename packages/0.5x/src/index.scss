@@ -119,6 +119,9 @@ h1 {
     padding: 10px;
     &:read-only {
       background: #eee;
+      &:focus {
+        outline: 0;
+      }
     }
   }
 }
