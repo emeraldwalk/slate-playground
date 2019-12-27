@@ -127,7 +127,12 @@ const App: React.FC = () => {
 
   return (
     <div className="c_app">
-      <h1>SlateJS Playground</h1>
+      <h1>
+        <span>SlateJS Playground</span>
+        <a href="../4">0.4x</a>
+        <span>0.5x</span>
+      </h1>
+
       <Slate
         editor={editor}
         onChange={setValue}

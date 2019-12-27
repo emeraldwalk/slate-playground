@@ -44,5 +44,11 @@
   "devDependencies": {
     "@types/slate": "^0.47.5",
     "@types/slate-react": "^0.22.9"
+  },
+  "workspaces": {
+    "nohoist": [
+      "@types/slate",
+      "@types/slate-react"
+    ]
   }
 }

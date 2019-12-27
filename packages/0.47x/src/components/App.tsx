@@ -72,7 +72,11 @@ const App: React.FC = () => {
     <div className="c_app">
       <div className="row">
         <div className="main">
-          <h1>SlateJS Playground</h1>
+          <h1>
+            <span>SlateJS Playground</span>
+            <span>0.4x</span>
+            <a href="../5">0.5x</a>
+          </h1>
 
           <div className="row">
             <Editor
