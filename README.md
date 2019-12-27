@@ -3,6 +3,8 @@ Playground to experiment with SlateJS API's
 
 [Live Playground](https://emeraldwalk.github.io/slate-playground/)
 
+There are navigation links in the top right to switch between the 0.4x and 0.5x versions of the playground.
+
 ## Features
 
 * View Selection and Value data models as Json
