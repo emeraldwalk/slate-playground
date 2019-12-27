@@ -25,8 +25,16 @@ h1 {
     padding: 2px 0;
     text-decoration: none;
   }
-  span:last-child {
+  span:last-of-type {
     border-bottom-color: #333;
+  }
+  > :last-child {
+    border-left: 2px solid $color-border;
+    font-weight: normal;
+    padding-left: 10px;
+  }
+  img {
+    width: 24px;
   }
 }
 

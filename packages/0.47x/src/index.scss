@@ -28,6 +28,14 @@ h1 {
   span:last-of-type {
     border-bottom-color: #333;
   }
+  > :last-child {
+    border-left: 2px solid $color-border;
+    font-weight: normal;
+    padding-left: 10px;
+  }
+  img {
+    width: 24px;
+  }
 }
 
 .c_app {
