@@ -181,7 +181,9 @@ const App: React.FC = () => {
             try {
               setValue(JSON.parse(pendingValue))
             }
-            catch(e) {}
+            catch(e) {
+              alert('Value could not be parsed.')
+            }
           }}>Update</button>
         </div>
 
