@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { createEditor } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
-import { CommandResult, EditorCommands, Header, Value } from '.'
+import { CommandResult, EditorCommands, Header, JsonEdit } from '.'
 import { initialValue } from '../data/value'
 
 const App: React.FC = () => {
@@ -11,6 +11,7 @@ const App: React.FC = () => {
   )
 
   const [lastResult, setLastResult] = useState('None')
+  const [selection, setSelection] = useState(editor.selection)
   const [value, setValue] = useState(initialValue)
 
   return (
@@ -19,7 +20,17 @@ const App: React.FC = () => {
 
       <Slate
         editor={editor}
-        onChange={setValue}
+        onChange={value => {
+          const isFocused = ReactEditor.isFocused(editor)
+
+          // this may have unintended side effects but
+          // trying to avoid the selection state being
+          // cleared if we want to edit it via <JsonEdit/>
+          if (isFocused) {
+            setSelection(editor.selection)
+          }
+          setValue(value)
+        }}
         value={value}
       >
         <Editable
@@ -37,7 +48,18 @@ const App: React.FC = () => {
       </Slate>
 
       <div className="c_tools">
-        <Value
+        <JsonEdit
+          isReadOnly={true}
+          label="Selection"
+          onUpdate={updated => {
+            ReactEditor.focus(editor)
+            editor.selection = updated
+            console.log(editor.selection)
+          }}
+          value={selection}
+        />
+        <JsonEdit
+          label="Value"
           onUpdate={updatedValue => {
             setValue(updatedValue)
             editor.selection = {
