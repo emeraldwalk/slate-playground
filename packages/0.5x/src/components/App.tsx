@@ -1,61 +1,8 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import { createEditor, Node } from 'slate'
+import React, { useMemo, useState } from 'react'
+import { createEditor } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
-import { Header, Methods } from '.'
-
-const initialValue: Node[] = [
-  {
-    type: 'div',
-    children: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'Block A1'
-          }
-        ],
-      },
-      {
-        type: 'paragraph',
-        children: [
-          {
-            text: 'Block A2'
-          }
-        ],
-      }
-    ]
-  },
-  {
-    type: 'paragraph',
-    children: [
-      {
-        text: 'Block B'
-      }
-    ]
-  },
-  {
-    type: 'paragraph',
-    children: [
-      {
-        text: 'Block C'
-      }
-    ]
-  },
-]
-
-function resultAsString(
-  result: any
-) {
-  if (typeof result === 'undefined') {
-    return 'undefined'
-  }
-
-  if (typeof result === 'object') {
-    return JSON.stringify(result, undefined, 2)
-  }
-
-  return String(result)
-}
+import { CommandResult, EditorCommands, Header, Value } from '.'
+import { initialValue } from '../data/value'
 
 const App: React.FC = () => {
   const editor = useMemo(
@@ -64,17 +11,7 @@ const App: React.FC = () => {
   )
 
   const [lastResult, setLastResult] = useState('None')
-  const [pendingValue, setPendingValue] = useState()
   const [value, setValue] = useState(initialValue)
-
-  useEffect(
-    () => {
-      setPendingValue(
-        JSON.stringify(value, undefined, 2)
-      )
-    },
-    [value]
-  )
 
   return (
     <div className="c_app">
@@ -100,36 +37,24 @@ const App: React.FC = () => {
       </Slate>
 
       <div className="c_tools">
-        <div className="c_value">
-          <h2>Value</h2>
-          <textarea
-            onChange={({ currentTarget }) => {
-              setPendingValue(currentTarget.value)
-            }}
-            value={pendingValue}
-          />
-          <button onClick={() => {
-            try {
-              setValue(JSON.parse(pendingValue))
-              editor.selection = {
-                "anchor": {
-                  "path": [0],
-                  "offset": 0
-                },
-                "focus": {
-                  "path": [0],
-                  "offset": 0
-                }
+        <Value
+          onUpdate={updatedValue => {
+            setValue(updatedValue)
+            editor.selection = {
+              "anchor": {
+                "path": [0],
+                "offset": 0
+              },
+              "focus": {
+                "path": [0],
+                "offset": 0
               }
-              ReactEditor.focus(editor)
             }
-            catch(e) {
-              alert('Value could not be parsed.')
-            }
-          }}>Update</button>
-        </div>
-
-        <Methods
+            ReactEditor.focus(editor)
+          }}
+          value={value}
+        />
+        <EditorCommands
           editor={editor}
           onResult={result => {
             setLastResult(result)
@@ -137,14 +62,9 @@ const App: React.FC = () => {
           }}
         />
 
-        <div className="c_result">
-          <h2>Result</h2>
-          <pre>
-            {
-              resultAsString(lastResult)
-            }
-          </pre>
-        </div>
+        <CommandResult
+          result={lastResult}
+        />
       </div>
     </div>
   )

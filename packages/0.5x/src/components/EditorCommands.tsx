@@ -8,12 +8,12 @@ import {
   runCommand
 } from '../util/command'
 
-export interface MethodsProps {
+export interface EditorCommandsProps {
   editor: Editor & ReactEditor,
   onResult: (result: any) => void,
 }
 
-const Methods: React.FC<MethodsProps> = ({
+const EditorCommands: React.FC<EditorCommandsProps> = ({
   editor,
   onResult,
 }) => {
@@ -116,4 +116,4 @@ const Methods: React.FC<MethodsProps> = ({
   )
 }
 
-export default Methods
+export default EditorCommands
