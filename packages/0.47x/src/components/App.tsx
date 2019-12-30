@@ -2,13 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor, OnChangeParam } from 'slate-react';
 import { Node as SlateNode } from 'slate';
 import { List } from 'immutable';
-import { Document, Selection } from '.';
+import { Document, Header, Selection } from '.';
 import { useFilter } from '../data/filter';
 import { Action, useMethodState, State } from '../data/methods';
 import { useDocument } from '../data/node';
 import { useValue } from '../data/value';
 import { nodeSummary } from '../data/utils';
-import githubImg from '../GitHub-Mark-32px.png'
 
 function onClick<M extends keyof State>(
   editor: Editor | null,
@@ -73,28 +72,8 @@ const App: React.FC = () => {
     <div className="c_app">
       <div className="row">
         <div className="main">
-          <h1>
-            <span>SlateJS Playground</span>
-            <span>0.4x</span>
-            <a href="../5">0.5x</a>
-            <a
-              href="https://github.com/emeraldwalk/slate-playground"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <img
-                alt="Github Repo"
-                src={githubImg}
-              />
-            </a>
-            <a
-              href="https://docs.slatejs.org/v/v0.47/"
-              rel="noopener noreferrer"
-              target="_blank"
-              title="SlateJS 0.4x docs"
-            >SlateJS
-            </a>
-          </h1>
+          <Header
+          />
 
           <div className="row">
             <Editor
